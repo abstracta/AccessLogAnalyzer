@@ -1,0 +1,38 @@
+﻿<Window x:Class="AccessLogAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Access Log Analizer" Height="420" Width="700">
+    <Grid>
+        <Label Name="LabelInterval" Content="Interval" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="99"/>
+        <ComboBox Name="ComboInterval" HorizontalAlignment="Left" Height="31" Margin="114,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Name="LabelTop" Content="Top" HorizontalAlignment="Left" Height="31" Margin="10,46,0,0" VerticalAlignment="Top" Width="99"/>
+        <ComboBox Name="ComboTop" HorizontalAlignment="Left" Height="31" Margin="114,46,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <Label Name="TxtFormatExample" HorizontalAlignment="Left" Margin="137,82,0,0" VerticalAlignment="Top" Height="31" Width="530"/>
+        <Label Name="LabelLineFormat" Content="Line format" HorizontalAlignment="Left" Height="31" Margin="10,118,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBox Name="TxtLineFormat" HorizontalAlignment="Left" Height="31" Margin="137,118,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530"/>
+
+        <Label Name="LabelInputFile" Content="Input file" HorizontalAlignment="Left" Height="31" Margin="10,165,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBox Name="TxtInputFile" HorizontalAlignment="Left" Height="31" Margin="137,165,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530" TextChanged="RefreshResultFile"/>
+
+        <Label Name="LabelOutputFile" Content="Output file" HorizontalAlignment="Left" Height="31" Margin="10,201,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBox Name="TxtOutputFile" HorizontalAlignment="Left" Height="31" Margin="137,201,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530"/>
+
+        <Label Name="TxtFiltersLoaded" HorizontalAlignment="Left" Margin="137,252,0,0" VerticalAlignment="Top" Height="31" Width="467"/>
+        <Label Name="LabelFilterFileName" Content="Filter URLs (File)" HorizontalAlignment="Left" Height="31" Margin="10,291,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBox Name="TxtFilterFileName" HorizontalAlignment="Left" Height="31" Margin="137,291,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530"/>
+
+        <Button Name="ProcessButton" Content="Start Process" HorizontalAlignment="Left" Margin="264,335,0,0" VerticalAlignment="Top" Width="152" Click="ProcessAccessLog" Height="39" />
+
+        <CheckBox Name="HideEmptyIntervalsCheck" Content="HideEmptyIntervals" HorizontalAlignment="Left" Margin="548,15,0,0" VerticalAlignment="Top"/>
+
+        <CheckBox Name="LogHTTP500ListCheck" Content="Log HTTP 500 list" HorizontalAlignment="Left" Margin="429,15,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="LogHTTP400ListCheck" Content="Log HTTP 400 list" HorizontalAlignment="Left" Margin="429,36,0,0" VerticalAlignment="Top"/>
+
+        <CheckBox Name="FilterStaticRequests" Content="Filter Static Requests" HorizontalAlignment="Left" Margin="548,36,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="Logging" Content="Logging?" HorizontalAlignment="Left" Margin="429,57,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="Filter300" Content="Filter 3?? Requests" HorizontalAlignment="Left" Margin="548,57,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+
+</Window>

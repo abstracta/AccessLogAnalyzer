@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<accessLogAnalyzer>
+	<interval>1</interval>
+	<top>5</top>
+	<outputFile></outputFile>
+
+	<server name="MZT72013-1">
+		<!-- todo: allow to use filters like *.txt -->
+		<logFiles>D:\Abstracta\Desarrollo\AbstractaTools\AccessLogAnalizer\TestData\case 5 - two servers\MZT72013-1.txt</logFiles>
+		<filtersFileName></filtersFileName>
+		<lineFormat>HOST TIME URL RCODE RSIZE RTIME</lineFormat>
+
+		<lineProcesor>
+			<regexp>(^\S+) \S+ \S+ \[(\S+) -\d+] \"(\S+ \S+) HTTP\S+ (\d+) (\d+) (\d+$)</regexp>
+			<template>$1\t$2\t$3\t$4\t$5\t$6</template>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Jan/</replace>
+			<with>/01/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Feb/</replace>
+			<with>/02/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Mar/</replace>
+			<with>/03/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Apr/</replace>
+			<with>/04/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/May/</replace>
+			<with>/05/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Jun/</replace>
+			<with>/06/</with>
+		</lineProcesor>
+		<lineProcesor>
+			<replace>/Jul/</replace>
+			<with>/07/</with>
+		</lineProcesor>
+	</server>
+</accessLogAnalyzer>
