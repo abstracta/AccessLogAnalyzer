@@ -1,4 +1,4 @@
-﻿<Application x:Class="AccessLogAnalizer.App"
+﻿<Application x:Class="AccessLogAnalyzer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Startup="Initialize"
