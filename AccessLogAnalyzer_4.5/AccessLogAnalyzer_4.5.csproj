@@ -1,22 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{3DD3E855-5A80-4CA9-8283-338EBBEE5862}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccessLogAnalyzer</RootNamespace>
+    <RootNamespace>Abstracta.AccessLogAnalyzer</RootNamespace>
     <AssemblyName>Abstracta.AccessLogAnalyzer_NET4.5</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,281 +20,39 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility" />
-    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="ReachFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Printing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="..\AccessLogAnalyzer_4.0\App.xaml.cs">
-      <Link>App.xaml.cs</Link>
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\AssemblyLicenseAttribute.cs">
-      <Link>CommandLine\Attributes\AssemblyLicenseAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\AssemblyUsageAttribute.cs">
-      <Link>CommandLine\Attributes\AssemblyUsageAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\BaseOptionAttribute.cs">
-      <Link>CommandLine\Attributes\BaseOptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\HelpOptionAttribute.cs">
-      <Link>CommandLine\Attributes\HelpOptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\HelpVerbOptionAttribute.cs">
-      <Link>CommandLine\Attributes\HelpVerbOptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\MultiLineTextAttribute.cs">
-      <Link>CommandLine\Attributes\MultiLineTextAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\OptionArrayAttribute.cs">
-      <Link>CommandLine\Attributes\OptionArrayAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\OptionAttribute.cs">
-      <Link>CommandLine\Attributes\OptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\OptionListAttribute.cs">
-      <Link>CommandLine\Attributes\OptionListAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\ParserStateAttribute.cs">
-      <Link>CommandLine\Attributes\ParserStateAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\ValueListAttribute.cs">
-      <Link>CommandLine\Attributes\ValueListAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\ValueOptionAttribute.cs">
-      <Link>CommandLine\Attributes\ValueOptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Attributes\VerbOptionAttribute.cs">
-      <Link>CommandLine\Attributes\VerbOptionAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\BadOptionInfo.cs">
-      <Link>CommandLine\BadOptionInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Extensions\CharExtensions.cs">
-      <Link>CommandLine\Extensions\CharExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Extensions\StringExtensions.cs">
-      <Link>CommandLine\Extensions\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\GlobalSuppressions.cs">
-      <Link>CommandLine\GlobalSuppressions.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\Assumes.cs">
-      <Link>CommandLine\Infrastructure\Assumes.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\Pair.cs">
-      <Link>CommandLine\Infrastructure\Pair.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\PopsicleSetter.cs">
-      <Link>CommandLine\Infrastructure\PopsicleSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\ReflectionCache.cs">
-      <Link>CommandLine\Infrastructure\ReflectionCache.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\ReflectionHelper.cs">
-      <Link>CommandLine\Infrastructure\ReflectionHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Infrastructure\SR.strings.cs">
-      <Link>CommandLine\Infrastructure\SR.strings.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\IParserState.cs">
-      <Link>CommandLine\IParserState.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parser.cs">
-      <Link>CommandLine\Parser.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\ParserException.cs">
-      <Link>CommandLine\ParserException.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\ParserSettings.cs">
-      <Link>CommandLine\ParserSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\ParserState.cs">
-      <Link>CommandLine\ParserState.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\ParsingError.cs">
-      <Link>CommandLine\ParsingError.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\ArgumentParser.cs">
-      <Link>CommandLine\Parsing\ArgumentParser.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\IArgumentEnumerator.cs">
-      <Link>CommandLine\Parsing\IArgumentEnumerator.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\LongOptionParser.cs">
-      <Link>CommandLine\Parsing\LongOptionParser.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\OneCharStringEnumerator.cs">
-      <Link>CommandLine\Parsing\OneCharStringEnumerator.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\OptionGroupParser.cs">
-      <Link>CommandLine\Parsing\OptionGroupParser.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\OptionInfo.cs">
-      <Link>CommandLine\Parsing\OptionInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\OptionMap.cs">
-      <Link>CommandLine\Parsing\OptionMap.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\PresentParserState.cs">
-      <Link>CommandLine\Parsing\PresentParserState.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\PropertyWriter.cs">
-      <Link>CommandLine\Parsing\PropertyWriter.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\StringArrayEnumerator.cs">
-      <Link>CommandLine\Parsing\StringArrayEnumerator.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\TargetCapabilitiesExtensions.cs">
-      <Link>CommandLine\Parsing\TargetCapabilitiesExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Parsing\ValueMapper.cs">
-      <Link>CommandLine\Parsing\ValueMapper.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\BaseSentenceBuilder.cs">
-      <Link>CommandLine\Text\BaseSentenceBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\CopyrightInfo.cs">
-      <Link>CommandLine\Text\CopyrightInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\EnglishSentenceBuilder.cs">
-      <Link>CommandLine\Text\EnglishSentenceBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\FormatOptionHelpTextEventArgs.cs">
-      <Link>CommandLine\Text\FormatOptionHelpTextEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\HeadingInfo.cs">
-      <Link>CommandLine\Text\HeadingInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\HelpText.cs">
-      <Link>CommandLine\Text\HelpText.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\CommandLine\Text\_ParsingErrorsHandler.cs">
-      <Link>CommandLine\Text\_ParsingErrorsHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\AccessLog.cs">
-      <Link>Logic\AccessLog.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\CommandLineParameters.cs">
-      <Link>Logic\CommandLineParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\ConfigurationManager.cs">
-      <Link>Logic\ConfigurationManager.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\Constants.cs">
-      <Link>Logic\Constants.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\GuiParameters.cs">
-      <Link>Logic\GuiParameters.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\Interval.cs">
-      <Link>Logic\Interval.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\IntervalSize.cs">
-      <Link>Logic\IntervalSize.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\Logger.cs">
-      <Link>Logic\Logger.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\Procesor.cs">
-      <Link>Logic\Procesor.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\TimeUnitType.cs">
-      <Link>Logic\TimeUnitType.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\TopTypes.cs">
-      <Link>Logic\TopTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\Logic\URLFilterSingleton.cs">
-      <Link>Logic\URLFilterSingleton.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.0\MainWindow.xaml.cs">
-      <Link>MainWindow.xaml.cs</Link>
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="CommandLine\Infrastructure\SR.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SR2.strings.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\AccessLogAnalyzer_4.0\Readme.txt">
-      <Link>Readme.txt</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\AccessLogAnalyzer_4.0\CommandLine\CustomDictionary.xml">
-      <Link>CommandLine\CustomDictionary.xml</Link>
-    </Resource>
+    <Compile Include="AccessLog.cs" />
+    <Compile Include="CommandLineParameterAux.cs" />
+    <Compile Include="CommandLineParameters.cs" />
+    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="GuiParameters.cs" />
+    <Compile Include="Interval.cs" />
+    <Compile Include="IntervalSize.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Procesor.cs" />
+    <Compile Include="TimeUnitType.cs" />
+    <Compile Include="TopTypes.cs" />
+    <Compile Include="URLFilterSingleton.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

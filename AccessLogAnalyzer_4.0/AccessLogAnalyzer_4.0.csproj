@@ -4,19 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{DEA64AAF-5DD5-4260-8FF0-30F31333ACB2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccessLogAnalyzer</RootNamespace>
+    <RootNamespace>Abstracta.AccessLogAnalyzer</RootNamespace>
     <AssemblyName>Abstracta.AccessLogAnalyzer_NET4.0</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,154 +20,65 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility" />
-    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="ReachFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Printing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="CommandLine\Attributes\AssemblyLicenseAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\AssemblyUsageAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\BaseOptionAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\HelpOptionAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\HelpVerbOptionAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\MultiLineTextAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\OptionArrayAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\OptionAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\OptionListAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\ParserStateAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\ValueListAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\ValueOptionAttribute.cs" />
-    <Compile Include="CommandLine\Attributes\VerbOptionAttribute.cs" />
-    <Compile Include="CommandLine\BadOptionInfo.cs" />
-    <Compile Include="CommandLine\Extensions\CharExtensions.cs" />
-    <Compile Include="CommandLine\Extensions\StringExtensions.cs" />
-    <Compile Include="CommandLine\GlobalSuppressions.cs" />
-    <Compile Include="CommandLine\Infrastructure\Assumes.cs" />
-    <Compile Include="CommandLine\Infrastructure\Pair.cs" />
-    <Compile Include="CommandLine\Infrastructure\PopsicleSetter.cs" />
-    <Compile Include="CommandLine\Infrastructure\ReflectionCache.cs" />
-    <Compile Include="CommandLine\Infrastructure\ReflectionHelper.cs" />
-    <Compile Include="CommandLine\Infrastructure\SR.strings.cs" />
-    <Compile Include="CommandLine\IParserState.cs" />
-    <Compile Include="CommandLine\Parser.cs" />
-    <Compile Include="CommandLine\ParserException.cs" />
-    <Compile Include="CommandLine\ParserSettings.cs" />
-    <Compile Include="CommandLine\ParserState.cs" />
-    <Compile Include="CommandLine\ParsingError.cs" />
-    <Compile Include="CommandLine\Parsing\ArgumentParser.cs" />
-    <Compile Include="CommandLine\Parsing\IArgumentEnumerator.cs" />
-    <Compile Include="CommandLine\Parsing\LongOptionParser.cs" />
-    <Compile Include="CommandLine\Parsing\OneCharStringEnumerator.cs" />
-    <Compile Include="CommandLine\Parsing\OptionGroupParser.cs" />
-    <Compile Include="CommandLine\Parsing\OptionInfo.cs" />
-    <Compile Include="CommandLine\Parsing\OptionMap.cs" />
-    <Compile Include="CommandLine\Parsing\PresentParserState.cs" />
-    <Compile Include="CommandLine\Parsing\PropertyWriter.cs" />
-    <Compile Include="CommandLine\Parsing\StringArrayEnumerator.cs" />
-    <Compile Include="CommandLine\Parsing\TargetCapabilitiesExtensions.cs" />
-    <Compile Include="CommandLine\Parsing\ValueMapper.cs" />
-    <Compile Include="CommandLine\Text\BaseSentenceBuilder.cs" />
-    <Compile Include="CommandLine\Text\CopyrightInfo.cs" />
-    <Compile Include="CommandLine\Text\EnglishSentenceBuilder.cs" />
-    <Compile Include="CommandLine\Text\FormatOptionHelpTextEventArgs.cs" />
-    <Compile Include="CommandLine\Text\HeadingInfo.cs" />
-    <Compile Include="CommandLine\Text\HelpText.cs" />
-    <Compile Include="CommandLine\Text\_ParsingErrorsHandler.cs" />
-    <Compile Include="Logic\GuiParameters.cs" />
-    <Compile Include="Logic\AccessLog.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="..\AccessLogAnalyzer_4.5\AccessLog.cs">
+      <Link>AccessLog.cs</Link>
     </Compile>
-    <Compile Include="Logic\CommandLineParameters.cs" />
-    <Compile Include="Logic\ConfigurationManager.cs" />
-    <Compile Include="Logic\Constants.cs" />
-    <Compile Include="Logic\Interval.cs" />
-    <Compile Include="Logic\IntervalSize.cs" />
-    <Compile Include="Logic\Logger.cs" />
-    <Compile Include="Logic\Procesor.cs" />
-    <Compile Include="Logic\TimeUnitType.cs" />
-    <Compile Include="Logic\TopTypes.cs" />
-    <Compile Include="Logic\URLFilterSingleton.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="..\AccessLogAnalyzer_4.5\CommandLineParameterAux.cs">
+      <Link>CommandLineParameterAux.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
+    <Compile Include="..\AccessLogAnalyzer_4.5\CommandLineParameters.cs">
+      <Link>CommandLineParameters.cs</Link>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+    <Compile Include="..\AccessLogAnalyzer_4.5\ConfigurationManager.cs">
+      <Link>ConfigurationManager.cs</Link>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    <Compile Include="..\AccessLogAnalyzer_4.5\Constants.cs">
+      <Link>Constants.cs</Link>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="CommandLine\Infrastructure\SR.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SR1.strings.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="CommandLine\CustomDictionary.xml" />
+    <Compile Include="..\AccessLogAnalyzer_4.5\GuiParameters.cs">
+      <Link>GuiParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\Interval.cs">
+      <Link>Interval.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\IntervalSize.cs">
+      <Link>IntervalSize.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\Logger.cs">
+      <Link>Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\Procesor.cs">
+      <Link>Procesor.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\TimeUnitType.cs">
+      <Link>TimeUnitType.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\TopTypes.cs">
+      <Link>TopTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\URLFilterSingleton.cs">
+      <Link>URLFilterSingleton.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
