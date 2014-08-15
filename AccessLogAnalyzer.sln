@@ -1,10 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_CLI_4.5", "AccessLogAnalyzer_CLI_4.0\AccessLogAnalyzer_CLI_4.5.csproj", "{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_CLI_4.0", "AccessLogAnalyzer_CLI_4.5\AccessLogAnalyzer_CLI_4.0.csproj", "{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccessLogAnalizers", "AccessLogAnalizers", "{2B147475-C068-4CE9-AA4A-57FA54FE36CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserInterfaces", "UserInterfaces", "{64352AA3-87A5-47FA-9AF4-76B86A779CAF}"
@@ -13,20 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_4.0", "Ac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_4.5", "AccessLogAnalyzer_4.5\AccessLogAnalyzer_4.5.csproj", "{3DD3E855-5A80-4CA9-8283-338EBBEE5862}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_CLI_4.0", "AccessLogAnalyzer_CLI_4.0\AccessLogAnalyzer_CLI_4.0.csproj", "{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessLogAnalyzer_CLI_4.5", "AccessLogAnalyzer_CLI_4.5\AccessLogAnalyzer_CLI_4.5.csproj", "{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEA64AAF-5DD5-4260-8FF0-30F31333ACB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA64AAF-5DD5-4260-8FF0-30F31333ACB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA64AAF-5DD5-4260-8FF0-30F31333ACB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +27,14 @@ Global
 		{3DD3E855-5A80-4CA9-8283-338EBBEE5862}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DD3E855-5A80-4CA9-8283-338EBBEE5862}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DD3E855-5A80-4CA9-8283-338EBBEE5862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24EBE3D9-B71E-4070-BC6A-D1E6A6BBA309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

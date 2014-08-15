@@ -67,167 +67,160 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\App.xaml.cs">
+      </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\App.xaml.cs">
       <Link>App.xaml.cs</Link>
-      <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLineParameters.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLineParameters.cs">
       <Link>CommandLineParameters.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\AssemblyLicenseAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\AssemblyLicenseAttribute.cs">
       <Link>CommandLine\Attributes\AssemblyLicenseAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\AssemblyUsageAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\AssemblyUsageAttribute.cs">
       <Link>CommandLine\Attributes\AssemblyUsageAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\BaseOptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\BaseOptionAttribute.cs">
       <Link>CommandLine\Attributes\BaseOptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\HelpOptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\HelpOptionAttribute.cs">
       <Link>CommandLine\Attributes\HelpOptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\HelpVerbOptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\HelpVerbOptionAttribute.cs">
       <Link>CommandLine\Attributes\HelpVerbOptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\MultiLineTextAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\MultiLineTextAttribute.cs">
       <Link>CommandLine\Attributes\MultiLineTextAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\OptionArrayAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\OptionArrayAttribute.cs">
       <Link>CommandLine\Attributes\OptionArrayAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\OptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\OptionAttribute.cs">
       <Link>CommandLine\Attributes\OptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\OptionListAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\OptionListAttribute.cs">
       <Link>CommandLine\Attributes\OptionListAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\ParserStateAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\ParserStateAttribute.cs">
       <Link>CommandLine\Attributes\ParserStateAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\ValueListAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\ValueListAttribute.cs">
       <Link>CommandLine\Attributes\ValueListAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\ValueOptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\ValueOptionAttribute.cs">
       <Link>CommandLine\Attributes\ValueOptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Attributes\VerbOptionAttribute.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\VerbOptionAttribute.cs">
       <Link>CommandLine\Attributes\VerbOptionAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\BadOptionInfo.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\BadOptionInfo.cs">
       <Link>CommandLine\BadOptionInfo.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Extensions\CharExtensions.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Extensions\CharExtensions.cs">
       <Link>CommandLine\Extensions\CharExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Extensions\StringExtensions.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Extensions\StringExtensions.cs">
       <Link>CommandLine\Extensions\StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\GlobalSuppressions.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\GlobalSuppressions.cs">
       <Link>CommandLine\GlobalSuppressions.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\Assumes.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\Assumes.cs">
       <Link>CommandLine\Infrastructure\Assumes.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\Pair.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\Pair.cs">
       <Link>CommandLine\Infrastructure\Pair.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\PopsicleSetter.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\PopsicleSetter.cs">
       <Link>CommandLine\Infrastructure\PopsicleSetter.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\ReflectionCache.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\ReflectionCache.cs">
       <Link>CommandLine\Infrastructure\ReflectionCache.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\ReflectionHelper.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\ReflectionHelper.cs">
       <Link>CommandLine\Infrastructure\ReflectionHelper.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Infrastructure\SR.strings.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\SR.strings.cs">
       <Link>CommandLine\Infrastructure\SR.strings.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\IParserState.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\IParserState.cs">
       <Link>CommandLine\IParserState.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parser.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parser.cs">
       <Link>CommandLine\Parser.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\ParserException.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\ParserException.cs">
       <Link>CommandLine\ParserException.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\ParserSettings.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\ParserSettings.cs">
       <Link>CommandLine\ParserSettings.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\ParserState.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\ParserState.cs">
       <Link>CommandLine\ParserState.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\ParsingError.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\ParsingError.cs">
       <Link>CommandLine\ParsingError.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\ArgumentParser.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\ArgumentParser.cs">
       <Link>CommandLine\Parsing\ArgumentParser.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\IArgumentEnumerator.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\IArgumentEnumerator.cs">
       <Link>CommandLine\Parsing\IArgumentEnumerator.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\LongOptionParser.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\LongOptionParser.cs">
       <Link>CommandLine\Parsing\LongOptionParser.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\OneCharStringEnumerator.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\OneCharStringEnumerator.cs">
       <Link>CommandLine\Parsing\OneCharStringEnumerator.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\OptionGroupParser.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\OptionGroupParser.cs">
       <Link>CommandLine\Parsing\OptionGroupParser.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\OptionInfo.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\OptionInfo.cs">
       <Link>CommandLine\Parsing\OptionInfo.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\OptionMap.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\OptionMap.cs">
       <Link>CommandLine\Parsing\OptionMap.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\PresentParserState.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\PresentParserState.cs">
       <Link>CommandLine\Parsing\PresentParserState.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\PropertyWriter.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\PropertyWriter.cs">
       <Link>CommandLine\Parsing\PropertyWriter.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\StringArrayEnumerator.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\StringArrayEnumerator.cs">
       <Link>CommandLine\Parsing\StringArrayEnumerator.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\TargetCapabilitiesExtensions.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\TargetCapabilitiesExtensions.cs">
       <Link>CommandLine\Parsing\TargetCapabilitiesExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Parsing\ValueMapper.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Parsing\ValueMapper.cs">
       <Link>CommandLine\Parsing\ValueMapper.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\BaseSentenceBuilder.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\BaseSentenceBuilder.cs">
       <Link>CommandLine\Text\BaseSentenceBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\CopyrightInfo.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\CopyrightInfo.cs">
       <Link>CommandLine\Text\CopyrightInfo.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\EnglishSentenceBuilder.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\EnglishSentenceBuilder.cs">
       <Link>CommandLine\Text\EnglishSentenceBuilder.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\FormatOptionHelpTextEventArgs.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\FormatOptionHelpTextEventArgs.cs">
       <Link>CommandLine\Text\FormatOptionHelpTextEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\HeadingInfo.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\HeadingInfo.cs">
       <Link>CommandLine\Text\HeadingInfo.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\HelpText.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\HelpText.cs">
       <Link>CommandLine\Text\HelpText.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\Text\_ParsingErrorsHandler.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Text\_ParsingErrorsHandler.cs">
       <Link>CommandLine\Text\_ParsingErrorsHandler.cs</Link>
     </Compile>
-    <Compile Include="..\AccessLogAnalyzer_CLI_4.0\MainWindow.xaml.cs">
+    <Compile Include="..\AccessLogAnalyzer_CLI_4.5\MainWindow.xaml.cs">
       <Link>MainWindow.xaml.cs</Link>
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CommandLine\Infrastructure\SR2.strings.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SR.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -246,9 +239,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="CommandLine\Infrastructure\SR.tt">
+    <None Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\SR.strings">
+      <Link>CommandLine\Infrastructure\SR.strings</Link>
+    </None>
+    <None Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Infrastructure\SR.tt">
+      <Link>CommandLine\Infrastructure\SR.tt</Link>
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SR2.strings.cs</LastGenOutput>
+      <LastGenOutput>SR1.strings.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -263,20 +260,20 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\AccessLogAnalyzer_CLI_4.0\Readme.txt">
-      <Link>Readme.txt</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\AccessLogAnalyzer_CLI_4.0\CommandLine\CustomDictionary.xml">
-      <Link>CommandLine\CustomDictionary.xml</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AccessLogAnalyzer_4.0\AccessLogAnalyzer_4.0.csproj">
       <Project>{dea64aaf-5dd5-4260-8ff0-30f31333acb2}</Project>
       <Name>AccessLogAnalyzer_4.0</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\CustomDictionary.xml">
+      <Link>CommandLine\CustomDictionary.xml</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\AccessLogAnalyzer_CLI_4.5\Readme.txt">
+      <Link>Readme.txt</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

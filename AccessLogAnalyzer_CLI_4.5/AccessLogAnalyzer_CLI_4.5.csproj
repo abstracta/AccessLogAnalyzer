@@ -91,11 +91,6 @@
     <Compile Include="CommandLine\Infrastructure\ReflectionCache.cs" />
     <Compile Include="CommandLine\Infrastructure\ReflectionHelper.cs" />
     <Compile Include="CommandLine\Infrastructure\SR.strings.cs" />
-    <Compile Include="CommandLine\Infrastructure\SR1.strings.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SR.tt</DependentUpon>
-    </Compile>
     <Compile Include="CommandLine\IParserState.cs" />
     <Compile Include="CommandLine\Parser.cs" />
     <Compile Include="CommandLine\ParserException.cs" />
@@ -148,10 +143,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="CommandLine\Infrastructure\SR.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SR1.strings.cs</LastGenOutput>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
