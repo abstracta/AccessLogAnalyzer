@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 
 namespace Abstracta.AccessLogAnalyzer
 {
@@ -16,6 +17,7 @@ namespace Abstracta.AccessLogAnalyzer
             // Initialize tooltips
             ComboInterval.ToolTip = LabelInterval.ToolTip = AbstractCommandLineParameters.HelpTextInterval;
             ComboTop.ToolTip = LabelTop.ToolTip = AbstractCommandLineParameters.HelpTextTop;
+            ComboServerType.ToolTip = LabelServerType.ToolTip = AbstractCommandLineParameters.HelpTextServerType;
 
             // TxtFormatExample.ToolTip = "";
 
@@ -42,13 +44,17 @@ namespace Abstracta.AccessLogAnalyzer
                 ComboTop.Items.Add(value);
             }
 
+            foreach (var value in Enum.GetNames(typeof(ServerType)))
+            {
+                ComboServerType.Items.Add(value);
+            }
+
             var cm = ConfigurationManager.GetInstance();
 
             ComboInterval.SelectedItem = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)).ToString();
             ComboTop.SelectedItem = Interval.GetTopTypeFromTopIntValue(cm.GetValueAsInteger(Constants.Top)).ToString();
             TxtInputFile.Text = cm.GetValueAsString(Constants.InputFile);
             TxtOutputFile.Text = cm.GetValueAsString(Constants.OutputFile);
-            TxtFormatExample.Content = Constants.LineFormatExample;
             TxtLineFormat.Text = cm.GetValueAsString(Constants.LineFormat);
             TxtFilterFileName.Text = cm.GetValueAsString(Constants.FilterFileName);
 
@@ -105,7 +111,9 @@ namespace Abstracta.AccessLogAnalyzer
             var filter300 = Filter300.IsChecked != null && Filter300.IsChecked.Value;
 
             var format = TxtLineFormat.Text;
-
+            var serverType = GetServerTypeSelectedByUser();
+            var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
+            
             var parameters = new GuiParameters
                 {
                     IntervaloDefinido = intervaloDefinido,
@@ -118,7 +126,7 @@ namespace Abstracta.AccessLogAnalyzer
                     FilterStaticReqs = filterStaticReqs,
                     Verbose = verbose,
                     Filter300 = filter300,
-                    Format = format,
+                    DataLineExtractor = dateLineExtractor,
                 };
 
             if (!_worker.IsBusy)
@@ -182,6 +190,11 @@ namespace Abstracta.AccessLogAnalyzer
             return Interval.GetIntervalSelectedByUser((string)ComboInterval.SelectedItem);
         }
 
+        private ServerType GetServerTypeSelectedByUser()
+        {
+            return DataExtractor.GetServerTypeFromString((string)ComboTop.SelectedItem);
+        }
+        
         private TopTypes GetTopSelectedByUser()
         {
             return Interval.GetTopSelectedByUser((string)ComboTop.SelectedItem);

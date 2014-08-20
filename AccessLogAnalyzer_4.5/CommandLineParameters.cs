@@ -17,6 +17,8 @@
         public const string HelpTextTop = "The 'n' slowest URLs on each interval";
         public const string HelpTextInputFile = "Log file name that is going to be procesed";
 
+        public const string HelpTextServerType = "Indicates the server type to parse correctly the lines of the log: { 'Apache', 'IIS', 'Tomcat' }";
+
         public abstract int Interval { get; set; }
 
         public abstract int Top { get; set; }
@@ -42,6 +44,8 @@
         public abstract bool Filter300 { get; set; }
 
         public abstract bool Verbose { get; set; }
+
+        public abstract DataExtractors.ServerType ServerType { get; set; } 
 
         public abstract string GetUsage();
 

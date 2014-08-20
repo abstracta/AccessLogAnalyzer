@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 using CommandLine;
 
 namespace Abstracta.AccessLogAnalyzer
@@ -43,6 +44,10 @@ namespace Abstracta.AccessLogAnalyzer
                                           ? CommandLineParameterAux.CreateResultFileName(inputFile)
                                           : cm.GetValueAsString(Constants.OutputFile);
 
+                    var format = cm.GetValueAsString(Constants.LineFormat);
+                    var serverType = cm.GetValueAsString(Constants.ServerType);
+                    var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
+
                     var parameters = new GuiParameters
                     {
                         IntervaloDefinido = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)),
@@ -55,7 +60,7 @@ namespace Abstracta.AccessLogAnalyzer
                         FilterStaticReqs = cm.GetValueAsBool(Constants.FilterStaticRequests),
                         Verbose = cm.GetValueAsBool(Constants.Verbose),
                         Filter300 = cm.GetValueAsBool(Constants.Filter300),
-                        Format = cm.GetValueAsString(Constants.LineFormat),
+                        DataLineExtractor = dateLineExtractor,
                     };
 
                     var result = Procesor.ProcessAccessLog(null, parameters);

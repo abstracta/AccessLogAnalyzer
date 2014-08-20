@@ -28,13 +28,13 @@
 
         public const int Filter300 = 11;
 
+        public const int ServerType = 12;
+
         // --- Default values --- 
 
         public const int IntervalDefaultValue = 10;
 
         public const int TopDefaultValue = 5;
-
-        public static string LineFormatExample = AccessLog.Parameters;
 
         public const string FilterFileNameDefaultValue = "";
 
@@ -55,6 +55,8 @@
         public const bool VerboseDefaultValue = false;
 
         public const bool Filter300DefaultValue = false;
+
+        public const string ServerTypeDefaultValue = "Apache";
 
         public const TimeUnitType UnitTypeDefaultValue = TimeUnitType.Milliseconds;
     }

@@ -44,6 +44,12 @@
     <Compile Include="CommandLineParameters.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DataExtractors\ApacheDataExtractor.cs" />
+    <Compile Include="DataExtractors\AccessLogExtractor.cs" />
+    <Compile Include="DataExtractors\IISDataExtractor.cs" />
+    <Compile Include="DataExtractors\DataExtractor.cs" />
+    <Compile Include="DataExtractors\TomcatDataExtractor.cs" />
+    <Compile Include="FormatType.cs" />
     <Compile Include="GuiParameters.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="IntervalSize.cs" />

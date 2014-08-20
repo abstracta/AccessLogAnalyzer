@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 
 namespace Abstracta.AccessLogAnalyzer
 {
@@ -10,16 +11,19 @@ namespace Abstracta.AccessLogAnalyzer
     {
         public static List<Interval> ProcessAccessLog(BackgroundWorker worker, GuiParameters p)
         {
-            return ProcessAccessLog(worker, p.IntervaloDefinido, p.Top, p.LogFileName, p.Format, p.LogHTTP500List, p.LogHTTP400List, p.FilterStaticReqs, p.Filter300, p.Verbose);
+            return ProcessAccessLog(worker, p.IntervaloDefinido, p.Top, p.LogFileName, p.DataLineExtractor, p.LogHTTP500List, p.LogHTTP400List, p.FilterStaticReqs, p.Filter300, p.Verbose);
         }
 
-        public static List<Interval> ProcessAccessLog(BackgroundWorker worker, IntervalSize intervalSizeDefined, TopTypes top, string logFileName, string format, bool logHTTP500List, bool logHTTP400List, bool filterStaticRequests, bool filter300, bool verbose)
+        public static List<Interval> ProcessAccessLog(BackgroundWorker worker, IntervalSize intervalSizeDefined, TopTypes top, string logFileName, DataExtractor format, bool logHTTP500List, bool logHTTP400List, bool filterStaticRequests, bool filter300, bool verbose)
         {
+            Logger.GetInstance().Verbose = verbose;
+
             if (!File.Exists(logFileName))
             {
                 throw new Exception(@"File doesn't exists: " + logFileName);
             }
 
+            // to give feedback to the user about the processing state
             var onePercent = int.MaxValue;
             var reportProcessStatus = false;
             if (worker != null)
@@ -29,34 +33,10 @@ namespace Abstracta.AccessLogAnalyzer
                 onePercent = totalLines/100;
             }
 
-            Logger.GetInstance().Verbose = verbose;
-
+            // Create memory structures
             var initialSize = Interval.CalculateInitialSize(intervalSizeDefined);
             var intervals = new List<Interval>(initialSize);
             var minutes = Interval.GetMinutesFromInterval(intervalSizeDefined);
-            var unitType = Constants.UnitTypeDefaultValue;
-
-            // todo: replace this code by a loop
-            if (format.Contains(" " + AccessLog.StrSecond))
-            {
-                unitType = TimeUnitType.Seconds;
-                format = format.Replace(" " + AccessLog.StrSecond, "");
-            }
-            else if (format.Contains(" " + AccessLog.StrMillisecond))
-            {
-                unitType = TimeUnitType.Milliseconds;
-                format = format.Replace(" " + AccessLog.StrMillisecond, "");
-            }
-            else if (format.Contains(" " + AccessLog.StrMicrosecond))
-            {
-                unitType = TimeUnitType.Microseconds;
-                format = format.Replace(" " + AccessLog.StrMicrosecond, "");
-            }
-
-            // end todo
-
-            var formatItems = format.Split(' ');
-            var isResponseEndTime = formatItems.Any(i => i == AccessLog.StrREndTime);
 
             // read the access log file and group all requests by interval
             using (var file = new StreamReader(logFileName))
@@ -67,7 +47,8 @@ namespace Abstracta.AccessLogAnalyzer
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
-                    var accessLog = AccessLog.CreateFromLine(line, formatItems, unitType, isResponseEndTime, filterStaticRequests, filter300);
+                    format.SetLine(line);
+                    var accessLog = AccessLog.CreateFromLine(format, filterStaticRequests, filter300);
                     if (accessLog == null)
                     {
                         // if format of line is unknown, then the line is discarded

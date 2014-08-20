@@ -20,7 +20,7 @@
 
         public bool Verbose { get; set; }
 
-        public string Format { get; set; }
+        public DataExtractors.DataExtractor DataLineExtractor { get; set; }
 
         public bool Filter300 { get; set; }
     }

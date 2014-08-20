@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using Abstracta.AccessLogAnalyzer.DataExtractors;
+using CommandLine;
 using CommandLine.Text;
 
 namespace Abstracta.AccessLogAnalyzer
@@ -61,6 +62,9 @@ namespace Abstracta.AccessLogAnalyzer
 
         [Option('i', "inputFile", HelpText = HelpTextInputFile)]
         public override string InputFile { get; set; }
+
+        [Option('t', "serverType", HelpText = HelpTextServerType)]
+        public override ServerType ServerType { get; set; }
     }
 
     // Define a class to receive parsed values
@@ -74,5 +78,8 @@ namespace Abstracta.AccessLogAnalyzer
 
         [Option('i', "inputFile", Required = true, HelpText = HelpTextInputFile)]
         public override string InputFile { get; set; }
+
+        [Option('t', "serverType", Required = true, HelpText = HelpTextServerType)]
+        public override ServerType ServerType { get; set; }
     }
 }

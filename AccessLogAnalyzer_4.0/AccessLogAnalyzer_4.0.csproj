@@ -54,6 +54,21 @@
     <Compile Include="..\AccessLogAnalyzer_4.5\Constants.cs">
       <Link>Constants.cs</Link>
     </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\AccessLogExtractor.cs">
+      <Link>DataExtractors\AccessLogExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\ApacheDataExtractor.cs">
+      <Link>DataExtractors\ApacheDataExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\DataExtractor.cs">
+      <Link>DataExtractors\DataExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\IISDataExtractor.cs">
+      <Link>DataExtractors\IISDataExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\TomcatDataExtractor.cs">
+      <Link>DataExtractors\TomcatDataExtractor.cs</Link>
+    </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\GuiParameters.cs">
       <Link>GuiParameters.cs</Link>
     </Compile>
