@@ -15,11 +15,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,14 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AccessLogAnalyzer_4.5\AbstractCommandLineParameters.cs">
+      <Link>AbstractCommandLineParameters.cs</Link>
+    </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\AccessLog.cs">
       <Link>AccessLog.cs</Link>
     </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\CommandLineParameterAux.cs">
       <Link>CommandLineParameterAux.cs</Link>
-    </Compile>
-    <Compile Include="..\AccessLogAnalyzer_4.5\CommandLineParameters.cs">
-      <Link>CommandLineParameters.cs</Link>
     </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\ConfigurationManager.cs">
       <Link>ConfigurationManager.cs</Link>

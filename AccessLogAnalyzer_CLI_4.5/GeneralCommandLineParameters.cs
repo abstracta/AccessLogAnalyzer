@@ -1,8 +1,9 @@
-﻿using Abstracta.AccessLogAnalyzer.DataExtractors;
+﻿using Abstracta.AccessLogAnalyzer;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 using CommandLine;
 using CommandLine.Text;
 
-namespace Abstracta.AccessLogAnalyzer
+namespace Abstracta.AccessLogAnalyzerUI
 {
     internal abstract class GeneralCommandLineParameters : AbstractCommandLineParameters
     {

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,7 +42,7 @@
   <ItemGroup>
     <Compile Include="AccessLog.cs" />
     <Compile Include="CommandLineParameterAux.cs" />
-    <Compile Include="CommandLineParameters.cs" />
+    <Compile Include="AbstractCommandLineParameters.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataExtractors\ApacheDataExtractor.cs" />

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AccessLogAnalyzer_4.0")]
+[assembly: AssemblyTitle("Abstracta.AccessLogAnalyzer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AccessLogAnalyzer_4.0")]
+[assembly: AssemblyCompany("Abstracta")]
+[assembly: AssemblyProduct("Abstracta.AccessLogAnalyzer")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

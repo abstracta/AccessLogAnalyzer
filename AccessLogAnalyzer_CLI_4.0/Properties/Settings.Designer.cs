@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Abstracta.AccessLogAnalyzer.Properties {
+namespace Abstracta.AccessLogAnalyzerUI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

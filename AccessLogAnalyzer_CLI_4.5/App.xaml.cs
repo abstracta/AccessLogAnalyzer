@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using Abstracta.AccessLogAnalyzer;
 using Abstracta.AccessLogAnalyzer.DataExtractors;
 using CommandLine;
 
-namespace Abstracta.AccessLogAnalyzer
+namespace Abstracta.AccessLogAnalyzerUI
 {
     public partial class App
     {

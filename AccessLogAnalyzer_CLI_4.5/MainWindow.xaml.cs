@@ -2,9 +2,10 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Abstracta.AccessLogAnalyzer;
 using Abstracta.AccessLogAnalyzer.DataExtractors;
 
-namespace Abstracta.AccessLogAnalyzer
+namespace Abstracta.AccessLogAnalyzerUI
 {
     public partial class MainWindow
     {
