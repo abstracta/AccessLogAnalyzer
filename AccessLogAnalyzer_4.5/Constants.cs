@@ -1,4 +1,6 @@
-﻿namespace Abstracta.AccessLogAnalyzer
+﻿using Abstracta.AccessLogAnalyzer.DataExtractors;
+
+namespace Abstracta.AccessLogAnalyzer
 {
     public static class Constants
     {
@@ -56,7 +58,7 @@
 
         public const bool Filter300DefaultValue = false;
 
-        public const string ServerTypeDefaultValue = "Apache";
+        public const ServerType ServerTypeDefaultValue = DataExtractors.ServerType.AccessLogFormat;
 
         public const TimeUnitType UnitTypeDefaultValue = TimeUnitType.Milliseconds;
     }

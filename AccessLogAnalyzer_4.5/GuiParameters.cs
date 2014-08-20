@@ -1,4 +1,6 @@
-﻿namespace Abstracta.AccessLogAnalyzer
+﻿using Abstracta.AccessLogAnalyzer.DataExtractors;
+
+namespace Abstracta.AccessLogAnalyzer
 {
     public class GuiParameters
     {
@@ -20,7 +22,9 @@
 
         public bool Verbose { get; set; }
 
-        public DataExtractors.DataExtractor DataLineExtractor { get; set; }
+        public DataExtractor DataLineExtractor { get; set; }
+
+        public ServerType ServerType { get; set; }
 
         public bool Filter300 { get; set; }
     }

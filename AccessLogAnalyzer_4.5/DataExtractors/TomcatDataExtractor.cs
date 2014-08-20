@@ -7,6 +7,12 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
     {
         // https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/valves/AccessLogValve.html
 
+        public static string Parameters
+        {
+            get { return "%A %b %B %H %m %p %q %r %s %t %U %v %T %I"; }
+        }
+
+
         public TomcatDataExtractor(string format)
         {
             // HOST TIME URL RCODE RTIME RSIZE

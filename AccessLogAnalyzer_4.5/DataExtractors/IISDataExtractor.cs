@@ -5,6 +5,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
     public class IISDataExtractor : DataExtractor
     {
+        public static string Parameters
+        {
+            get { return "NOT YET IMPLEMENTED"; }
+        }
+
         public IISDataExtractor(string format)
         {
             throw new NotImplementedException(format);

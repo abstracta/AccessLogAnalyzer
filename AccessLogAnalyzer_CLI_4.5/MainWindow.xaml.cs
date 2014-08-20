@@ -54,9 +54,10 @@ namespace Abstracta.AccessLogAnalyzerUI
 
             ComboInterval.SelectedItem = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)).ToString();
             ComboTop.SelectedItem = Interval.GetTopTypeFromTopIntValue(cm.GetValueAsInteger(Constants.Top)).ToString();
+            ComboServerType.SelectedItem = cm.GetValueAsServerType(Constants.ServerType).ToString();
             TxtInputFile.Text = cm.GetValueAsString(Constants.InputFile);
             TxtOutputFile.Text = cm.GetValueAsString(Constants.OutputFile);
-            TxtLineFormat.Text = cm.GetValueAsString(Constants.LineFormat);
+            TxtLineFormat.Text = cm.GetLineFormat();
             TxtFilterFileName.Text = cm.GetValueAsString(Constants.FilterFileName);
 
             LogHTTP500ListCheck.IsChecked = cm.GetValueAsBool(Constants.LogHttp500);
@@ -193,7 +194,7 @@ namespace Abstracta.AccessLogAnalyzerUI
 
         private ServerType GetServerTypeSelectedByUser()
         {
-            return DataExtractor.GetServerTypeFromString((string)ComboTop.SelectedItem);
+            return DataExtractor.GetServerTypeFromString((string)ComboServerType.SelectedItem);
         }
         
         private TopTypes GetTopSelectedByUser()
@@ -204,6 +205,14 @@ namespace Abstracta.AccessLogAnalyzerUI
         private void RefreshResultFile(object sender, TextChangedEventArgs e)
         {
             TxtOutputFile.Text = CommandLineParameterAux.CreateResultFileName(TxtInputFile.Text);
+        }
+
+        private void ServerTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var serverType = GetServerTypeSelectedByUser();
+            var cm = ConfigurationManager.GetInstance();
+            cm.SetValue(Constants.ServerType, serverType);
+            TxtLineFormat.Text = cm.GetLineFormat();
         }
     }
 }

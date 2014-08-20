@@ -40,12 +40,6 @@ namespace Abstracta.AccessLogAnalyzerUI
         [ParserState]
         public IParserState LastParserState { get; set; }
 
-        [HelpOption]
-        public override string GetUsage()
-        {
-            return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
-        }
-
         public override string DefaultOutputFile
         {
             get { return CommandLineParameterAux.CreateResultFileName(InputFile); }
@@ -55,6 +49,12 @@ namespace Abstracta.AccessLogAnalyzerUI
     // Define a class to receive parsed values
     internal class CommandLineParametersWhenGUI : GeneralCommandLineParameters
     {
+        [HelpOption]
+        public override string GetUsage()
+        {
+            return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
+        }
+
         [Option('v', "interval", HelpText = HelpTextInterval)]
         public override int Interval { get; set; }
 
@@ -71,6 +71,12 @@ namespace Abstracta.AccessLogAnalyzerUI
     // Define a class to receive parsed values
     internal class CommandLineParametersWhenNonGUI : GeneralCommandLineParameters
     {
+        [HelpOption]
+        public override string GetUsage()
+        {
+            return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
+        }
+
         [Option('v', "interval", Required = true, HelpText = HelpTextInterval)]
         public override int Interval { get; set; }
 

@@ -9,6 +9,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
         // http://httpd.apache.org/docs/2.2/logs.html
         // http://httpd.apache.org/docs/current/mod/mod_log_config.html
 
+        public static string Parameters
+        {
+            get { return "%D %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
+        }
+
         public ApacheDataExtractor(string format)
         {
             // HOST TIME URL RCODE RTIME RSIZE

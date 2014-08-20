@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 
 namespace Abstracta.AccessLogAnalyzer
 {
@@ -34,7 +35,9 @@ namespace Abstracta.AccessLogAnalyzer
 
                     { Constants.HideEmptyIntervals,     Constants.HideEmptyIntervalsDefaultValue },
 
-                    { Constants.Verbose,        Constants.VerboseDefaultValue },
+                    { Constants.Verbose,                Constants.VerboseDefaultValue },
+
+                    { Constants.ServerType,             Constants.ServerTypeDefaultValue }
                 };
         }
 
@@ -129,6 +132,11 @@ namespace Abstracta.AccessLogAnalyzer
                 _parameters[Constants.Filter300] = !(bool)_parameters[Constants.Filter300];
             }
 
+            if (parameters.ServerType != Constants.ServerTypeDefaultValue)
+            {
+                _parameters[Constants.ServerType] = parameters.ServerType;
+            }
+
             _initialized = true;
         }
 
@@ -147,6 +155,11 @@ namespace Abstracta.AccessLogAnalyzer
             return (bool)_parameters[parameterCode];
         }
 
+        public ServerType GetValueAsServerType(int parameterCode)
+        {
+            return (ServerType)_parameters[parameterCode];
+        }
+
         public void SetValue(int parameterCode, object value)
         {
             if (_parameters.ContainsKey(parameterCode))
@@ -156,6 +169,24 @@ namespace Abstracta.AccessLogAnalyzer
             else
             {
                 _parameters.Add(parameterCode, value);
+            }
+        }
+
+        public string GetLineFormat()
+        {
+            switch ((ServerType) _parameters[Constants.ServerType])
+            {
+                case ServerType.Tomcat:
+                    return TomcatDataExtractor.Parameters;
+
+                case ServerType.Apache:
+                    return ApacheDataExtractor.Parameters;
+
+                case ServerType.IIS:
+                    return IISDataExtractor.Parameters;
+
+                default:
+                    return AccessLogExtractor.Parameters;
             }
         }
     }

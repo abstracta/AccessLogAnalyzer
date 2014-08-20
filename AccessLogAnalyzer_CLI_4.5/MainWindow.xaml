@@ -9,7 +9,7 @@
         <ComboBox Name="ComboTop" HorizontalAlignment="Left" Height="31" Margin="114,44,0,0" VerticalAlignment="Top" Width="120"/>
 
         <Label Name="LabelServerType" Content="Server type" HorizontalAlignment="Left" Height="31" Margin="10,77,0,0" VerticalAlignment="Top" Width="99"/>
-        <ComboBox Name="ComboServerType" HorizontalAlignment="Left" Height="31" Margin="114,77,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="ComboServerType" HorizontalAlignment="Left" Height="31" Margin="114,77,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ServerTypeChanged"/>
         <Label Name="LabelLineFormat" Content="Line format" HorizontalAlignment="Left" Height="31" Margin="11,132,0,0" VerticalAlignment="Top" Width="122"/>
         <TextBox Name="TxtLineFormat" HorizontalAlignment="Left" Height="31" Margin="138,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530"/>
 

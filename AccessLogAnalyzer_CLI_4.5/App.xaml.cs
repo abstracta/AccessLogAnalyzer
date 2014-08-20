@@ -46,7 +46,7 @@ namespace Abstracta.AccessLogAnalyzerUI
                                           : cm.GetValueAsString(Constants.OutputFile);
 
                     var format = cm.GetValueAsString(Constants.LineFormat);
-                    var serverType = cm.GetValueAsString(Constants.ServerType);
+                    var serverType = DataExtractor.GetServerTypeFromString(cm.GetValueAsString(Constants.ServerType));
                     var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
 
                     var parameters = new GuiParameters
@@ -62,6 +62,7 @@ namespace Abstracta.AccessLogAnalyzerUI
                         Verbose = cm.GetValueAsBool(Constants.Verbose),
                         Filter300 = cm.GetValueAsBool(Constants.Filter300),
                         DataLineExtractor = dateLineExtractor,
+                        ServerType = serverType,
                     };
 
                     var result = Procesor.ProcessAccessLog(null, parameters);

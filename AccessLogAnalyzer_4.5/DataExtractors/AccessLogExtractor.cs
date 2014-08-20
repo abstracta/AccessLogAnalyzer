@@ -21,6 +21,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
         internal static string[] FormatTime = { StrRtime, StrREndTime };
         internal static string[] FormatTimeUnit = { StrSecond, StrMillisecond, StrMicrosecond };
 
+        public static string Parameters
+        {
+            get { return String.Join(" ", FormatParameters); }
+        }
+
         /// <summary>
         /// When update this, remember to update Constants.LineFormatDefaultValue
         /// </summary>
@@ -34,14 +39,6 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 StrRsize, 
                 String.Join("|", FormatTimeUnit)
             };
-
-        public static string Parameters
-        {
-            get
-            {
-                return String.Join(" ", FormatParameters);
-            }
-        }
 
         public AccessLogExtractor(string format)
         {
