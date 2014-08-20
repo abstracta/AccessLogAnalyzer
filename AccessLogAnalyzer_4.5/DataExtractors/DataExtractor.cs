@@ -61,7 +61,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
                 var groups = Regex.Match(input, Pattern).Groups;
 
-                if (TemplateOrder[HOST] != -1)
+                if (TemplateOrder[HOST] != 0)
                 {
                     RemoteHost = groups[TemplateOrder[HOST]].Value;
                 }
