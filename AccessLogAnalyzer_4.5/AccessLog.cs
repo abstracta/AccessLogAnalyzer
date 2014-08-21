@@ -5,6 +5,8 @@ namespace Abstracta.AccessLogAnalyzer
 {
     internal class AccessLog
     {
+        private const char StrSeparator = '\t';
+
         internal string Host { get; set; }
 
         internal DateTime Time { get; set; }
@@ -77,6 +79,7 @@ namespace Abstracta.AccessLogAnalyzer
             {
                 result.Host = formatedLine.RemoteHost;
                 result.Time = formatedLine.Time;
+                result.ResponseTime = formatedLine.ResponseTime;
             }
             catch (Exception)
             {
@@ -97,7 +100,13 @@ namespace Abstracta.AccessLogAnalyzer
 
         public override string ToString()
         {
-            return DataLineExtractor.ToString();
+            return
+                (DataLineExtractor.Contains(DataExtractor.HOST) ? ("" + Host + StrSeparator) : string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.TIME) ? ("" + Time + StrSeparator) : string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.URL) ? ("" + URL + StrSeparator) : string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.RCODE) ? ("" + ResponseCode + StrSeparator) : string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.RSIZE) ? ("" + ResponseSize + StrSeparator) : string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.RTIME) ? ("" + ResponseTime) : string.Empty);
         }
 
         public int IndexOfResponseTimeInArray(int[] stadisticalPoints)

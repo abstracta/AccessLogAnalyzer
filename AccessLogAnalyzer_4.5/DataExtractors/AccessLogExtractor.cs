@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
@@ -108,12 +109,45 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                     Pattern += "\t(.*)";
                 }
             }
+        }
 
-            // Increment all indexes because the groups start on '1' instead of in '0'
-            for (var i = 0; i < TemplateOrder.Length; i++)
+        public override void SetLine(string input)
+        {
+            try
             {
-                TemplateOrder[i]++;
+                Line = input;
+                var groups = input.Split(new[] {'\t'});
+
+                if (groups.Length < 4)
+                {
+                    return;
+                }
+
+                if (TemplateOrder[HOST] != -1)
+                {
+                    RemoteHost = groups[TemplateOrder[HOST]];
+                }
+
+                Time = FormatDateTime(groups[TemplateOrder[TIME]]);
+                Url = groups[TemplateOrder[URL]];
+                ResponseCode = int.Parse(groups[TemplateOrder[RCODE]]);
+
+                if (TemplateOrder[RSIZE] != -1)
+                {
+                    ResponseSize = GetResponseSize(groups[TemplateOrder[RSIZE]]);
+                }
+
+                ResponseTime = double.Parse(groups[TemplateOrder[RTIME]], CultureInfo.InvariantCulture);
             }
+            catch (Exception)
+            {
+                Logger.GetInstance().AddLog("Couldn't extract the values from the line: " + input);
+            }
+        }
+
+        public override bool Contains(int parameter)
+        {
+            return TemplateOrder[parameter] > -1;
         }
 
         protected override DateTime FormatDateTime(string value)

@@ -123,7 +123,7 @@ namespace AccessLogAnalyzerTests
         public void AccessLogURL_02()
         {
             const string format = "HOST TIME URL RCODE RTIME RSIZE MICROSECONDS";
-            const string input = "10.34.140.79	07/03/2014 07:20:37	GET /jkmanager/?cmd=update&from=list&w=TEINdmzAN-loadbalancer&sw=TEINdmzANn2-serverajp13&vwa=1	200	2191	6178";
+            const string input = "10.34.140.79	07/03/2014 07:20:37 GET /jkmanager/?cmd=update&from=list&w=TEINdmzAN-loadbalancer&sw=TEINdmzANn2-serverajp13&vwa=1	200	2191	6178";
 
             var tf = new AccessLogExtractor(format);
             tf.SetLine(input);
@@ -135,6 +135,25 @@ namespace AccessLogAnalyzerTests
             Assert.AreEqual(DateTime.Parse("07/03/2014 07:20:37"), tf.Time, "TIME");
             Assert.AreEqual(TimeUnitType.Microseconds, tf.TimeUnit, "TimeUnit");
             Assert.AreEqual("GET /jkmanager/?cmd=update&from=list&w=TEINdmzAN-loadbalancer&sw=TEINdmzANn2-serverajp13&vwa=1", tf.Url, "URL");
+        }
+
+        [TestMethod]
+        [Owner("SDU")]
+        public void AccessLogURL_03()
+        {
+            const string format = "HOST TIME URL RCODE RTIME RSIZE SECOND";
+            const string input = "10.7.5.126\t01/08/2014 03:47:07\t\"GET /lafoto13.jpg\"\t404\t2\t15241";
+
+            var tf = new AccessLogExtractor(format);
+            tf.SetLine(input);
+
+            Assert.AreEqual("10.7.5.126", tf.RemoteHost, "HOST");
+            Assert.AreEqual(404, tf.ResponseCode, "RCODE");
+            Assert.AreEqual(15241, tf.ResponseSize, "RSIZE");
+            Assert.AreEqual(2, tf.ResponseTime, "RTIME");
+            Assert.AreEqual(DateTime.Parse("01/08/2014 03:47:07"), tf.Time, "TIME");
+            Assert.AreEqual(TimeUnitType.Seconds, tf.TimeUnit, "TimeUnit");
+            Assert.AreEqual("\"GET /lafoto13.jpg\"", tf.Url, "URL");
         }
     }
 }

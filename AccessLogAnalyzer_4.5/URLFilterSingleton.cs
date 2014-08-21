@@ -133,7 +133,7 @@ namespace Abstracta.AccessLogAnalyzer
                 }
             }
 
-            return !containsAnyOnlyText || _discardTextFilters.Any(url1.Contains);
+            return !containsAnyOnlyText || _discardTextFilters.Any(url1.Equals);
         }
 
         public int FiltersLoaded()

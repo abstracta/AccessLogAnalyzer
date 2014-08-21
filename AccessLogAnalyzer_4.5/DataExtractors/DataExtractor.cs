@@ -15,8 +15,6 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
     public abstract class DataExtractor
     {
-        private const char StrSeparator = '\t';
-
         // TOMCAT: h, a
         public string RemoteHost { get; protected set; }
 
@@ -41,18 +39,18 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
         public string Line { get; protected set; }
 
         // indexes
-        protected const int HOST = 0;
-        protected const int TIME = 1;
-        protected const int URL = 2;
-        protected const int RCODE = 3;
-        protected const int RTIME = 4;
-        protected const int RSIZE = 5;
+        public const int HOST = 0;
+        public const int TIME = 1;
+        public const int URL = 2;
+        public const int RCODE = 3;
+        public const int RTIME = 4;
+        public const int RSIZE = 5;
 
         protected string[] FormatItems;
         protected int[] TemplateOrder;
         protected string Pattern;
 
-        public void SetLine(string input)
+        public virtual void SetLine(string input)
         {
             // Execute the Regular Expression to extract the values
             try
@@ -77,29 +75,18 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
                 ResponseTime = double.Parse(groups[TemplateOrder[RTIME]].Value, CultureInfo.InvariantCulture);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception("Couldn't extract the values from the line: " + input, e);
+                Logger.GetInstance().AddLog("Couldn't extract the values from the line: " + input);
             }
         }
 
-        public override string ToString()
+        public virtual bool Contains(int parameter)
         {
-            return
-                (Contains(HOST) ? ("" + RemoteHost + StrSeparator) : string.Empty) +
-                (Contains(TIME) ? ("" + Time + StrSeparator) : string.Empty) +
-                (Contains(URL) ? ("" + URL + StrSeparator) : string.Empty) +
-                (Contains(RCODE) ? ("" + ResponseCode + StrSeparator) : string.Empty) +
-                (Contains(RSIZE) ? ("" + ResponseSize + StrSeparator) : string.Empty) +
-                (Contains(RTIME) ? ("" + ResponseTime) : string.Empty);
+            return TemplateOrder[parameter] > 0;
         }
 
         protected abstract DateTime FormatDateTime(string value);
-
-        private bool Contains(int index)
-        {
-            return TemplateOrder[index] != -1;
-        }
 
         protected static string CreatRegExpTemplate(IList<int> templateOrder)
         {
@@ -184,7 +171,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             }
         }
 
-        private static long GetResponseSize(string value)
+        protected static long GetResponseSize(string value)
         {
             return value == "-" ? 0 : long.Parse(value);
         }

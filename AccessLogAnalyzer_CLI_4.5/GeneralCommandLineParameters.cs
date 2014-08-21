@@ -64,7 +64,7 @@ namespace Abstracta.AccessLogAnalyzerUI
         [Option('i', "inputFile", HelpText = HelpTextInputFile)]
         public override string InputFile { get; set; }
 
-        [Option('t', "serverType", HelpText = HelpTextServerType)]
+        [Option('j', "serverType", HelpText = HelpTextServerType)]
         public override ServerType ServerType { get; set; }
     }
 
@@ -86,7 +86,7 @@ namespace Abstracta.AccessLogAnalyzerUI
         [Option('i', "inputFile", Required = true, HelpText = HelpTextInputFile)]
         public override string InputFile { get; set; }
 
-        [Option('t', "serverType", Required = true, HelpText = HelpTextServerType)]
+        [Option('j', "serverType", Required = true, HelpText = HelpTextServerType)]
         public override ServerType ServerType { get; set; }
     }
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0FA8199B-7CFF-4B43-BD2F-33A4B87BC6DE}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Abstracta.AccessLogAnalyzerUI</RootNamespace>
     <AssemblyName>Abstracta.AccessLogAnalyzer_NET4.0_UI</AssemblyName>
@@ -52,6 +52,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -87,6 +90,7 @@
   <ItemGroup>
     <Compile Include="..\AccessLogAnalyzer_CLI_4.5\App.xaml.cs">
       <Link>App.xaml.cs</Link>
+      <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\AccessLogAnalyzer_CLI_4.5\CommandLine\Attributes\AssemblyLicenseAttribute.cs">
       <Link>CommandLine\Attributes\AssemblyLicenseAttribute.cs</Link>

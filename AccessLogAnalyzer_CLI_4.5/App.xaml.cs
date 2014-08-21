@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using Abstracta.AccessLogAnalyzer;
 using Abstracta.AccessLogAnalyzer.DataExtractors;
@@ -9,14 +8,8 @@ namespace Abstracta.AccessLogAnalyzerUI
 {
     public partial class App
     {
-        private const uint AttachParentProcess = 0x0ffffffff;
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool AttachConsole(uint dwProcessId);
-
         private void Initialize(object sender, StartupEventArgs e)
         {
-            AttachConsole(AttachParentProcess);
             AbstractCommandLineParameters options = new CommandLineParametersWhenGUI();
 
             if (!Parser.Default.ParseArguments(e.Args, options))
@@ -46,7 +39,7 @@ namespace Abstracta.AccessLogAnalyzerUI
                                           : cm.GetValueAsString(Constants.OutputFile);
 
                     var format = cm.GetValueAsString(Constants.LineFormat);
-                    var serverType = DataExtractor.GetServerTypeFromString(cm.GetValueAsString(Constants.ServerType));
+                    var serverType = cm.GetValueAsServerType(Constants.ServerType);
                     var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
 
                     var parameters = new GuiParameters

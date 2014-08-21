@@ -18,7 +18,6 @@ namespace Abstracta.AccessLogAnalyzerUI
             // Initialize tooltips
             ComboInterval.ToolTip = LabelInterval.ToolTip = AbstractCommandLineParameters.HelpTextInterval;
             ComboTop.ToolTip = LabelTop.ToolTip = AbstractCommandLineParameters.HelpTextTop;
-            ComboServerType.ToolTip = LabelServerType.ToolTip = AbstractCommandLineParameters.HelpTextServerType;
 
             // TxtFormatExample.ToolTip = "";
 
@@ -57,7 +56,7 @@ namespace Abstracta.AccessLogAnalyzerUI
             ComboServerType.SelectedItem = cm.GetValueAsServerType(Constants.ServerType).ToString();
             TxtInputFile.Text = cm.GetValueAsString(Constants.InputFile);
             TxtOutputFile.Text = cm.GetValueAsString(Constants.OutputFile);
-            TxtLineFormat.Text = cm.GetLineFormat();
+            TxtLineFormat.Text = cm.GetValueAsString(Constants.LineFormat);
             TxtFilterFileName.Text = cm.GetValueAsString(Constants.FilterFileName);
 
             LogHTTP500ListCheck.IsChecked = cm.GetValueAsBool(Constants.LogHttp500);
@@ -212,7 +211,8 @@ namespace Abstracta.AccessLogAnalyzerUI
             var serverType = GetServerTypeSelectedByUser();
             var cm = ConfigurationManager.GetInstance();
             cm.SetValue(Constants.ServerType, serverType);
-            TxtLineFormat.Text = cm.GetLineFormat();
+
+            ComboServerType.ToolTip = LabelServerType.ToolTip = cm.GetLineFormat();
         }
     }
 }
