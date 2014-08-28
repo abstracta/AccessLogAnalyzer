@@ -56,7 +56,7 @@ namespace Abstracta.AccessLogAnalyzer
                         continue;
                     }
 
-                    AddAccessLog(accessLog, intervals, minutes, intervalSizeDefined, top, logHTTP500List, logHTTP400List);
+                    intervals = AddAccessLog(accessLog, intervals, minutes, intervalSizeDefined, top, logHTTP500List, logHTTP400List);
 
                     linesProcessed++;
                     if (reportProcessStatus && linesProcessed % onePercent == 0)
@@ -229,7 +229,7 @@ namespace Abstracta.AccessLogAnalyzer
             Logger.GetInstance().SaveLogsToFile(fileName + "-LOG.txt");
         }
 
-        private static void AddAccessLog(AccessLog accessLog, List<Interval> intervals, int minutes, IntervalSize intervalSizeDefined, TopTypes top, bool logHTTP500List, bool logHTTP400List)
+        private static List<Interval> AddAccessLog(AccessLog accessLog, List<Interval> intervals, int minutes, IntervalSize intervalSizeDefined, TopTypes top, bool logHTTP500List, bool logHTTP400List)
         {
             var intervalOfRequest = FindIntervalOfRequest(intervals, accessLog, minutes);
 
@@ -262,6 +262,8 @@ namespace Abstracta.AccessLogAnalyzer
             }
 
             intervalOfRequest.Add(accessLog);
+
+            return intervals;
         }
 
         private static List<Interval> AddIntervalsToBackwards(IList<Interval> intervals, AccessLog accessLog, IntervalSize intervalSizeDefined, TopTypes top, bool logHTTP500List, bool logHTTP400List)
