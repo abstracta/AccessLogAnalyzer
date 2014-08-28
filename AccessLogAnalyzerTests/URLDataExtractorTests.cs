@@ -63,6 +63,26 @@ namespace AccessLogAnalyzerTests
 
         [TestMethod]
         [Owner("SDU")]
+        public void TomcatURL_03()
+        {
+            const string format = " %D-%a %t \"%r\" %s %b";
+            const string input1 =
+                " 31-192.168.240.152 [08/Aug/2014:21:02:08 -0300] \"POST /wscanales/servlet/uy.com.grupobbva.awscmconsultamovimientos HTTP/1.1\" 200 1322";
+
+            var tf = new TomcatDataExtractor(format);
+            tf.SetLine(input1);
+
+            Assert.AreEqual("192.168.240.152", tf.RemoteHost, "HOST");
+            Assert.AreEqual(200, tf.ResponseCode, "RCODE");
+            Assert.AreEqual(1322, tf.ResponseSize, "RSIZE");
+            Assert.AreEqual(31, tf.ResponseTime, "RTIME");
+            Assert.AreEqual(DateTime.Parse("08/08/2014 21:02:08"), tf.Time, "TIME");
+            Assert.AreEqual(TimeUnitType.Milliseconds, tf.TimeUnit, "TimeUnit");
+            Assert.AreEqual("POST /wscanales/servlet/uy.com.grupobbva.awscmconsultamovimientos", tf.Url, "URL");
+        }
+
+        [TestMethod]
+        [Owner("SDU")]
         public void ApacheURL_01()
         {
             const string format = "%a %u %H %t %T \"%r\" %>s %b";
@@ -84,8 +104,8 @@ namespace AccessLogAnalyzerTests
         [Owner("SDU")]
         public void ApacheURL_02()
         {
-            const string format = "%D %a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"";
-            const string input = "12 172.16.0.3 - - [25/Sep/2002:14:04:19 +0200] \"GET / HTTP/1.1\" 401 - \"\" \"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.1) Gecko/20020827\"";
+            const string format = "%D-%a_%l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"";
+            const string input = "12-172.16.0.3_- - [25/Sep/2002:14:04:19 +0200] \"GET / HTTP/1.1\" 401 - \"\" \"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.1) Gecko/20020827\"";
 
             var tf = new ApacheDataExtractor(format);
             tf.SetLine(input);
@@ -122,8 +142,8 @@ namespace AccessLogAnalyzerTests
         [Owner("SDU")]
         public void AccessLogURL_02()
         {
-            const string format = "HOST TIME URL RCODE RTIME RSIZE MICROSECONDS";
-            const string input = "10.34.140.79	07/03/2014 07:20:37 GET /jkmanager/?cmd=update&from=list&w=TEINdmzAN-loadbalancer&sw=TEINdmzANn2-serverajp13&vwa=1	200	2191	6178";
+            const string format = "HOST TIME URL RCODE RTIME RSIZE MICROSECOND";
+            const string input = "10.34.140.79	07/03/2014 07:20:37	GET /jkmanager/?cmd=update&from=list&w=TEINdmzAN-loadbalancer&sw=TEINdmzANn2-serverajp13&vwa=1	200	2191	6178";
 
             var tf = new AccessLogExtractor(format);
             tf.SetLine(input);

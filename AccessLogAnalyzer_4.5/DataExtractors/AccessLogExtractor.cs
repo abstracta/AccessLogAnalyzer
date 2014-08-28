@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
@@ -118,7 +120,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 Line = input;
                 var groups = input.Split(new[] {'\t'});
 
-                if (groups.Length < 4)
+                if (groups.Length != CountGroups(TemplateOrder))
                 {
                     return;
                 }
@@ -143,6 +145,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             {
                 Logger.GetInstance().AddLog("Couldn't extract the values from the line: " + input);
             }
+        }
+
+        private static int CountGroups(IEnumerable<int> templateOrder)
+        {
+            return templateOrder.Count(t => t != -1);
         }
 
         public override bool Contains(int parameter)
