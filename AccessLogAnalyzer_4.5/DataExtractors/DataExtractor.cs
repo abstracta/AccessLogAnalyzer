@@ -11,6 +11,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
         IIS,
         Tomcat,
         AccessLogFormat,
+        None,
     }
 
     public abstract class DataExtractor
@@ -189,8 +190,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 case "IIS":
                     return ServerType.IIS;
 
-                default:
+                case "AccessLogFormat":
                     return ServerType.AccessLogFormat;
+
+                default:
+                    return ServerType.None;
             }
         }
 

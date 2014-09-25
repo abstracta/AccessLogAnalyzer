@@ -13,7 +13,7 @@ namespace Abstracta.AccessLogAnalyzer
 
         private readonly bool _keepListOfHTTP500, _keepListOfHTTP400;
 
-        private int _countOfHTTP500, _countOfHTTP400, _totalCount;
+        private int _countOfHTTP500, _countOfHTTP400, _countOfHTTP300, _totalCount;
 
         private readonly static int[] StadisticalPoints = new[] { 2, 4, 6, 8, 10, 15, 20, 30, 40, 60, 80, 100, 120, int.MaxValue };
 
@@ -64,6 +64,7 @@ namespace Abstracta.AccessLogAnalyzer
 
             _countOfHTTP500 = 0;
             _countOfHTTP400 = 0;
+            _countOfHTTP300 = 0;
             _totalCount = 0;
 
             foreach (var point in StadisticalPoints)
@@ -120,6 +121,10 @@ namespace Abstracta.AccessLogAnalyzer
                 }
 
                 _countOfHTTP400++;
+            } 
+            else if (accessLog.ResponseCode >= 300)
+            {
+                _countOfHTTP300++;
             }
 
             _totalCount++;
@@ -296,8 +301,12 @@ namespace Abstracta.AccessLogAnalyzer
             }
         }
 
-        internal static readonly string ToStringHeader = "StartInterval" + StrSeparator + "TotalCount" + StrSeparator +
-                                                         "HTTP_5??" + StrSeparator + "HTTP_4??" + StrSeparator + StadisticalHeaders;
+        internal static readonly string ToStringHeader = "StartInterval" + StrSeparator +
+                                                         "TotalCount" + StrSeparator +
+                                                         "HTTP_5??" + StrSeparator +
+                                                         "HTTP_4??" + StrSeparator +
+                                                         "HTTP_3??" + StrSeparator +
+                                                         StadisticalHeaders;
 
         public override string ToString()
         {
@@ -308,6 +317,7 @@ namespace Abstracta.AccessLogAnalyzer
                    + _totalCount + StrSeparator
                    + _countOfHTTP500 + StrSeparator
                    + _countOfHTTP400 + StrSeparator
+                   + _countOfHTTP300 + StrSeparator
                    + stadisticalInformationString;
         }
     }

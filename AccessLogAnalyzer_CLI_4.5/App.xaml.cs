@@ -40,6 +40,14 @@ namespace Abstracta.AccessLogAnalyzerUI
 
                     var format = cm.GetValueAsString(Constants.LineFormat);
                     var serverType = cm.GetValueAsServerType(Constants.ServerType);
+
+                    if (serverType == ServerType.None)
+                    {
+                        Console.Out.WriteLine("Server type unknown: " + options.ServerType);
+                        Current.Shutdown();
+                        return;
+                    }
+
                     var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
 
                     var parameters = new GuiParameters

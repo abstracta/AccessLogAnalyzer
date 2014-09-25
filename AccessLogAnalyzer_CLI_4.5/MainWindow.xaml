@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Abstracta.AccessLogAnalyzerUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Access Log Analizer" Height="420" Width="700">
+        Title="Access Log Analyzer" Height="420" Width="700">
     <Grid>
         <Label Name="LabelInterval" Content="Interval" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="99"/>
         <ComboBox Name="ComboInterval" HorizontalAlignment="Left" Height="31" Margin="114,10,0,0" VerticalAlignment="Top" Width="120"/>

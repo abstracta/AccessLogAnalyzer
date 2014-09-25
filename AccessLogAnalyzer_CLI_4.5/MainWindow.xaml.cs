@@ -212,7 +212,9 @@ namespace Abstracta.AccessLogAnalyzerUI
             var cm = ConfigurationManager.GetInstance();
             cm.SetValue(Constants.ServerType, serverType);
 
-            ComboServerType.ToolTip = LabelServerType.ToolTip = cm.GetLineFormat();
+            LabelLineFormat.ToolTip = TxtLineFormat.ToolTip = ComboServerType.ToolTip = LabelServerType.ToolTip = cm.GetLineFormat();
+
+            // todo if  TxtLineFormat is example content of a serverType, then change to the new example content
         }
     }
 }

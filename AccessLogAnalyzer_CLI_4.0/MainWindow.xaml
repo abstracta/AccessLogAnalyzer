@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Abstracta.AccessLogAnalyzerUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Access Log Analizer" Height="420" Width="700">
+        Title="Access Log Analyzer" Height="420" Width="700">
     <Grid>
         <Label Name="LabelInterval" Content="Interval" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="99"/>
         <ComboBox Name="ComboInterval" HorizontalAlignment="Left" Height="31" Margin="114,10,0,0" VerticalAlignment="Top" Width="120"/>
@@ -9,7 +9,7 @@
         <ComboBox Name="ComboTop" HorizontalAlignment="Left" Height="31" Margin="114,44,0,0" VerticalAlignment="Top" Width="120"/>
 
         <Label Name="LabelServerType" Content="Server type" HorizontalAlignment="Left" Height="31" Margin="10,77,0,0" VerticalAlignment="Top" Width="99"/>
-        <ComboBox Name="ComboServerType" HorizontalAlignment="Left" Height="31" Margin="114,77,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="ComboServerType" HorizontalAlignment="Left" Height="31" Margin="114,77,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ServerTypeChanged"/>
         <Label Name="LabelLineFormat" Content="Line format" HorizontalAlignment="Left" Height="31" Margin="11,132,0,0" VerticalAlignment="Top" Width="122"/>
         <TextBox Name="TxtLineFormat" HorizontalAlignment="Left" Height="31" Margin="138,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530"/>
 
