@@ -85,7 +85,7 @@ namespace Abstracta.AccessLogAnalyzer
 
             if (!File.Exists(fileName))
             {
-                throw new Exception("FilterFile doesn't exists");
+                Logger.GetInstance().AddLog("FilterFile doesn't exists: " + fileName);
             }
 
             using (var file = new StreamReader(fileName))

@@ -1,4 +1,5 @@
-﻿using Abstracta.AccessLogAnalyzer.DataExtractors;
+﻿using System.Collections.Generic;
+using Abstracta.AccessLogAnalyzer.DataExtractors;
 
 namespace Abstracta.AccessLogAnalyzer
 {
@@ -6,26 +7,33 @@ namespace Abstracta.AccessLogAnalyzer
     {
         public IntervalSize IntervaloDefinido { get; set; }
 
-        public string LogFileName { get; set; }
-
-        public bool FilterStaticReqs { get; set; }
-
-        public bool LogHTTP400List { get; set; }
-
         public TopTypes Top { get; set; }
 
-        public string ResultFileName { get; set; }
-
-        public bool HideEmptyIntervals { get; set; }
+        public bool LogHTTP400List { get; set; }
 
         public bool LogHTTP500List { get; set; }
 
         public bool Verbose { get; set; }
 
-        public DataExtractor DataLineExtractor { get; set; }
+        public bool HideEmptyIntervals { get; set; }
+
+        public string ResultFileName { get; set; }
+
+        public List<ServerParameters> Servers { get; set; }
+    }
+
+    public class ServerParameters
+    {
+        public string ServerName { get; set; }
 
         public ServerType ServerType { get; set; }
 
+        public List<string> LogFileNames { get; set; }
+        
+        public DataExtractor DataLineExtractor { get; set; }
+
         public bool Filter300 { get; set; }
+        
+        public bool FilterStaticReqs { get; set; }
     }
 }

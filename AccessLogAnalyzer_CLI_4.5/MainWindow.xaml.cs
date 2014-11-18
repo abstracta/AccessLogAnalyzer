@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,21 +54,28 @@ namespace Abstracta.AccessLogAnalyzerUI
 
             ComboInterval.SelectedItem = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)).ToString();
             ComboTop.SelectedItem = Interval.GetTopTypeFromTopIntValue(cm.GetValueAsInteger(Constants.Top)).ToString();
-            ComboServerType.SelectedItem = cm.GetValueAsServerType(Constants.ServerType).ToString();
-            TxtInputFile.Text = cm.GetValueAsString(Constants.InputFile);
             TxtOutputFile.Text = cm.GetValueAsString(Constants.OutputFile);
-            TxtLineFormat.Text = cm.GetValueAsString(Constants.LineFormat);
             TxtFilterFileName.Text = cm.GetValueAsString(Constants.FilterFileName);
 
             LogHTTP500ListCheck.IsChecked = cm.GetValueAsBool(Constants.LogHttp500);
             LogHTTP400ListCheck.IsChecked = cm.GetValueAsBool(Constants.LogHttp400);
             HideEmptyIntervalsCheck.IsChecked = cm.GetValueAsBool(Constants.HideEmptyIntervals);
-            FilterStaticRequests.IsChecked = cm.GetValueAsBool(Constants.FilterStaticRequests);
             Logging.IsChecked = cm.GetValueAsBool(Constants.Verbose);
-            Filter300.IsChecked = cm.GetValueAsBool(Constants.Filter300);
+
+            // todo: create GUI to manage new model of data (several servers with several log files)
+            var server = cm.GetListOfServerDefinitions()[0];
+
+            ComboServerType.SelectedItem = server.ServerType.ToString();
+            TxtInputFile.Text = server.LogFileNames[0];
+            TxtLineFormat.Text = (server.DataLineExtractor == null)
+                                     ? Constants.LineFormatDefaultValue
+                                     : server.DataLineExtractor.LineFormat;
+            FilterStaticRequests.IsChecked = server.FilterStaticReqs;
+            Filter300.IsChecked = server.Filter300;
 
             TxtFiltersLoaded.Content = "Filters loaded: " + URLFilterSingleton.GetInstance().FiltersLoaded();
 
+            // todo filters should be passed in the cm instead of set directly from here
             TxtFilterFileName.LostFocus += (sender, args) =>
                 {
                     try
@@ -114,20 +122,31 @@ namespace Abstracta.AccessLogAnalyzerUI
             var format = TxtLineFormat.Text;
             var serverType = GetServerTypeSelectedByUser();
             var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
-            
+
+            var serverDefinition = new ServerParameters
+                {
+                    Filter300 = filter300,
+                    LogFileNames = new List<string> { logFileName },
+                    FilterStaticReqs = filterStaticReqs,
+                    DataLineExtractor = dateLineExtractor,
+                    ServerType = serverType,
+                    ServerName = serverType == ServerType.Apache
+                                    ? "APACHE"
+                                    : serverType == ServerType.Tomcat
+                                          ? "TOMCAT"
+                                          : serverType == ServerType.IIS ? "IIS" : "SERVER",
+                };
+
             var parameters = new GuiParameters
                 {
                     IntervaloDefinido = intervaloDefinido,
                     Top = top,
-                    LogFileName = logFileName,
                     ResultFileName = resultFileName,
                     HideEmptyIntervals = hideEmptyIntervals,
                     LogHTTP500List = logHTTP500List,
                     LogHTTP400List = logHTTP400List,
-                    FilterStaticReqs = filterStaticReqs,
                     Verbose = verbose,
-                    Filter300 = filter300,
-                    DataLineExtractor = dateLineExtractor,
+                    Servers = new List<ServerParameters> { serverDefinition },
                 };
 
             if (!_worker.IsBusy)
@@ -210,9 +229,13 @@ namespace Abstracta.AccessLogAnalyzerUI
         {
             var serverType = GetServerTypeSelectedByUser();
             var cm = ConfigurationManager.GetInstance();
-            cm.SetValue(Constants.ServerType, serverType);
 
-            LabelLineFormat.ToolTip = TxtLineFormat.ToolTip = ComboServerType.ToolTip = LabelServerType.ToolTip = cm.GetLineFormat();
+            cm.GetListOfServerDefinitions()[0].ServerType = serverType;
+
+            LabelLineFormat.ToolTip =
+                TxtLineFormat.ToolTip =
+                ComboServerType.ToolTip =
+                LabelServerType.ToolTip = cm.GetLineFormat(cm.GetListOfServerDefinitions()[0].ServerName);
 
             // todo if  TxtLineFormat is example content of a serverType, then change to the new example content
         }

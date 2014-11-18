@@ -3,7 +3,12 @@ using System.IO;
 
 namespace Abstracta.AccessLogAnalyzer
 {
-    public class Logger
+    public enum LoggerType
+    {
+        File, Console
+    }
+
+    internal class Logger
     {
         private static volatile Logger _instance;
 
@@ -12,6 +17,8 @@ namespace Abstracta.AccessLogAnalyzer
         private readonly List<string> _logs = new List<string>();
 
         internal bool Verbose { get; set; }
+
+        internal LoggerType LogType { get; set; }
 
         internal static Logger GetInstance()
         {
@@ -33,13 +40,24 @@ namespace Abstracta.AccessLogAnalyzer
         {
             if (Verbose)
             {
-                _logs.Add(log);
+                var message = System.DateTime.Now.ToString("yyyy.MM.dd-hh:mm:ss - ") + log;
+
+                switch (LogType)
+                {
+                    case LoggerType.Console:
+                        System.Console.WriteLine(message);
+                        break;
+
+                    default:
+                        _logs.Add(message);
+                        break;
+                }
             }
         }
 
         internal void SaveLogsToFile()
         {
-            SaveLogsToFile(System.DateTime.Now.ToString("yyyy.MM.dd-hh:mm:ss") + "-DefaultLogsFileName.log");
+            SaveLogsToFile(System.DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss") + "-DefaultLogsFileName.log");
         }
 
         internal void SaveLogsToFile(string fileName)

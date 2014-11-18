@@ -85,6 +85,9 @@
     <Compile Include="..\AccessLogAnalyzer_4.5\Procesor.cs">
       <Link>Procesor.cs</Link>
     </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\ServerInInterval.cs">
+      <Link>ServerInInterval.cs</Link>
+    </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\TimeUnitType.cs">
       <Link>TimeUnitType.cs</Link>
     </Compile>

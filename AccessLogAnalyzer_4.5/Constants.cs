@@ -10,9 +10,9 @@ namespace Abstracta.AccessLogAnalyzer
 
         public const int Top = 1;
 
-        public const int LineFormat = 2;
+        //// public const int LineFormat = 2;
 
-        public const int InputFile = 3;
+        //// public const int InputFile = 3;
 
         public const int OutputFile = 4;
 
@@ -24,13 +24,15 @@ namespace Abstracta.AccessLogAnalyzer
 
         public const int FilterFileName = 8;
 
-        public const int FilterStaticRequests = 9;
+        //// public const int FilterStaticRequests = 9;
 
         public const int Verbose = 10;
 
-        public const int Filter300 = 11;
+        //// public const int Filter300 = 11;
 
-        public const int ServerType = 12;
+        //// public const int ServerType = 12;
+
+        public const int Servers = 13;
 
         // --- Default values --- 
 
@@ -40,11 +42,11 @@ namespace Abstracta.AccessLogAnalyzer
 
         public const string FilterFileNameDefaultValue = "";
 
-        public const string LineFormatDefaultValue = "HOST TIME URL RCODE RTIME|RENDTIME RSIZE SECOND|MILLISECOND|MICROSECOND";
+        public const string LineFormatDefaultValue = "";
         
         public const string InputFileDefaultValue = "";
 
-        public const string OutputFileDefaultValue = "";
+        public const string OutputFileDefaultValue = "_reportResult.txt";
 
         public const bool HideEmptyIntervalsDefaultValue = false;
 
@@ -58,7 +60,7 @@ namespace Abstracta.AccessLogAnalyzer
 
         public const bool Filter300DefaultValue = false;
 
-        public const ServerType ServerTypeDefaultValue = DataExtractors.ServerType.AccessLogFormat;
+        public const ServerType ServerTypeDefaultValue = ServerType.None;
 
         public const TimeUnitType UnitTypeDefaultValue = TimeUnitType.Milliseconds;
     }

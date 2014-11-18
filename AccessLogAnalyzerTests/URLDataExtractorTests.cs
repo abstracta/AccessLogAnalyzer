@@ -83,6 +83,26 @@ namespace AccessLogAnalyzerTests
 
         [TestMethod]
         [Owner("SDU")]
+        public void TomcatURL_04()
+        {
+            const string format = "%A %b %B %H %m %p %q %r %s %t %U %v %T %I";
+            const string input1 =
+                "10.7.1.30 987 987 HTTP/1.1 POST 80 ?4a142e02309c314f79ae94569a6ae09e,gx-no-cache=1413977404991 POST /microcoop8/servlet/inicio?4a142e02309c314f79ae94569a6ae09e,gx-no-cache=1413977404991 HTTP/1.1 440 [22/Oct/2014:07:28:54 -0200] /microcoop8/servlet/inicio 10.7.1.27 0.004 TP-Processor5";
+
+            var tf = new TomcatDataExtractor(format);
+            tf.SetLine(input1);
+
+            Assert.AreEqual("10.7.1.27", tf.RemoteHost, "HOST");
+            Assert.AreEqual(440, tf.ResponseCode, "RCODE");
+            Assert.AreEqual(987, tf.ResponseSize, "RSIZE");
+            Assert.AreEqual(0.004, tf.ResponseTime, "RTIME");
+            Assert.AreEqual(DateTime.Parse("22/10/2014 07:28:54"), tf.Time, "TIME");
+            Assert.AreEqual(TimeUnitType.Seconds, tf.TimeUnit, "TimeUnit");
+            Assert.AreEqual("POST /microcoop8/servlet/inicio?4a142e02309c314f79ae94569a6ae09e,gx-no-cache=1413977404991", tf.Url, "URL");
+        }
+
+        [TestMethod]
+        [Owner("SDU")]
         public void ApacheURL_01()
         {
             const string format = "%a %u %H %t %T \"%r\" %>s %b";

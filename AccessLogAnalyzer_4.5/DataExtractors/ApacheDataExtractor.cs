@@ -16,6 +16,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public ApacheDataExtractor(string format)
         {
+            LineFormat = format;
+
             // HOST TIME URL RCODE RTIME RSIZE
             TemplateOrder = new[] { -1, -1, -1, -1, -1, -1 };
 

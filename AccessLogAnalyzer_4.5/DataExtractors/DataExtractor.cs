@@ -39,6 +39,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public string Line { get; protected set; }
 
+        public string LineFormat { get; protected set; }
+
         // indexes
         public const int HOST = 0;
         public const int TIME = 1;
@@ -121,30 +123,33 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             // "%%" is valid, means the character '%'
             var result = new List<string>();
 
-            var element = "%";
-            var startIndex = format.IndexOf('%');
-            for (var i = startIndex + 1; i < format.Length; i++)
+            if (format != null)
             {
-                if (format[i] == '%')
+                var element = "%";
+                var startIndex = format.IndexOf('%');
+                for (var i = startIndex + 1; i < format.Length; i++)
                 {
-                    if (format[i + 1] == '%')
+                    if (format[i] == '%')
                     {
-                        i++;
-                        element += "%%";
+                        if (format[i + 1] == '%')
+                        {
+                            i++;
+                            element += "%%";
+                        }
+                        else
+                        {
+                            result.Add(element);
+                            element = "%";
+                        }
                     }
                     else
                     {
-                        result.Add(element);
-                        element = "%";
+                        element += format[i];
                     }
                 }
-                else
-                {
-                    element += format[i];
-                }
-            }
 
-            result.Add(element);
+                result.Add(element);
+            }
 
             return result.ToArray();
         }
@@ -179,18 +184,18 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public static ServerType GetServerTypeFromString(string serverTypeStr)
         {
-            switch (serverTypeStr)
+            switch (serverTypeStr.ToLower())
             {
-                case "Apache":
+                case "apache":
                     return ServerType.Apache;
 
-                case "Tomcat":
+                case "tomcat":
                     return ServerType.Tomcat;
                     
-                case "IIS":
+                case "iis":
                     return ServerType.IIS;
 
-                case "AccessLogFormat":
+                case "accesslogformat":
                     return ServerType.AccessLogFormat;
 
                 default:

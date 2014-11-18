@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<configuration top="5" interval="1" logHTTP500List="true" logHTTP400List="false" hideEmptyIntervals="false" verbose="true"
+               outFile="AccessLogAnalyzer-Top.log">
+               <!--filtersFile="filters.txt"-->
+<!--
+  <server name="IIS1" filter300="false" filterStaticRequest="false" serverType="AccessLogFormat" formatLine="" >
+    <server.logFile path="Examples\case 5 - two servers\" fileName="IIS1-F1.log"/>
+    <server.logFile path="Examples\case 5 - two servers\" fileName="IIS1-F2.log"/>
+  </server>
+
+  <server name="IIS2" filter300="false" filterStaticRequest="false" serverType="AccessLogFormat" formatLine="" >
+    <server.logFile path="Examples\case 5 - two servers\" fileName="IIS2-F1.log"/>
+    <server.logFile path="Examples\case 5 - two servers\" fileName="IIS2-F2.log"/>
+  </server>
+-->
+
+  <server name="T1" filter300="false" filterStaticRequest="false" serverType="tomcat" formatLine="%A %u %S %t %r %s %B %D" >
+  
+  <!-- Supported paths: { absolute paths ; relative to .exe file path } supported -->
+    <server.logFile path="Examples\case 5 - two servers\" fileName="T1-F1.txt"/>
+    <server.logFile path="Examples\case 5 - two servers\" fileName="T1-F2.txt"/>
+  </server>
+
+  <server name="T2" filter300="false" filterStaticRequest="false" serverType="tomcat" formatLine="%A %u %S %t %r %s %B %D" >
+    <server.logFile path="Examples\case 5 - two servers\" fileName="T2-F1.txt"/>
+    <server.logFile path="Examples\case 5 - two servers\" fileName="T2-F2.txt"/>
+  </server>
+
+</configuration>

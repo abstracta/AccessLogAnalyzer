@@ -1,148 +1,125 @@
-﻿using System.Globalization;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace Abstracta.AccessLogAnalyzer
 {
+    public static class ServersManager
+    {
+        private static Dictionary<string, int> ServersIndex { get; set; }
+
+        static ServersManager()
+        {
+            ServersIndex = new Dictionary<string, int>();
+        }
+
+        internal static int GetServerIndex(string serverName)
+        {
+            return ServersIndex[serverName];
+        }
+
+        internal static int AddServer(string serverName)
+        {
+            if (ServersIndex.ContainsKey(serverName))
+            {
+                return ServersIndex[serverName];
+            }
+
+            ServersIndex.Add(serverName, ServersIndex.Count);
+
+            return ServersIndex.Count - 1;
+        }
+
+        internal static void Reset()
+        {
+            ServersIndex = new Dictionary<string, int>();
+        }
+    }
+
     public class Interval
     {
-        private const char StrSeparator = '\t';
+        private List<ServerInInterval> Servers { get; set; }
 
-        private readonly int _maxItemsInInterval;
+        internal AccessLogComparerByResponseTime AccessLogComparer { get; set; }
 
-        private readonly bool _keepListOfHTTP500, _keepListOfHTTP400;
+        public readonly static int[] StadisticalPoints = new[] { 2, 4, 6, 8, 10, 15, 20, 30, 40, 60, 80, 100, 120, int.MaxValue };
 
-        private int _countOfHTTP500, _countOfHTTP400, _countOfHTTP300, _totalCount;
+        public const char StrSeparator = '\t';
 
-        private readonly static int[] StadisticalPoints = new[] { 2, 4, 6, 8, 10, 15, 20, 30, 40, 60, 80, 100, 120, int.MaxValue };
+        public DateTime StartInterval { get; private set; }
 
-        private AccessLogComparerByResponseTime AccessLogComparer { get; set; }
+        public DateTime EndInterval { get; private set; }
 
-        internal DateTime StartInterval { get; private set; }
-
-        internal DateTime EndInterval { get; private set; }
-
-        internal Dictionary<int, long> StadisticalInformation { get; private set; }
-
-        internal List<AccessLog> TopOfInterval { get; private set; }
-
-        internal List<AccessLog> LogsHTTP400OfInterval { get; private set; }
-
-        internal List<AccessLog> LogsHTTP500OfInterval { get; private set; }
-
-        internal Interval(DateTime time, IntervalSize intervalSize, TopTypes top, bool keepListOfHTTP500, bool keepListOfHTTP400)
+        public Interval(IEnumerable<string> serverNames, DateTime time, IntervalSize intervalSize, TopTypes top, bool keepListOfHTTP500, bool keepListOfHTTP400)
         {
-            StadisticalInformation = new Dictionary<int, long>();
-            _maxItemsInInterval = GetTopIntValueFromTopType(top);
-            _keepListOfHTTP500 = keepListOfHTTP500;
-            _keepListOfHTTP400 = keepListOfHTTP400;
-
             var start = time.Subtract(new TimeSpan(0, 0, 0, time.Second));
             var end = start.AddMinutes(GetMinutesFromInterval(intervalSize));
             Initialize(start, end);
-        }
 
-        internal Interval(DateTime startTime, DateTime endTime, TopTypes top, bool keepListOfHTTP500, bool keepListOfHTTP400)
-        {
-            _maxItemsInInterval = GetTopIntValueFromTopType(top);
-            _keepListOfHTTP500 = keepListOfHTTP500;
-            _keepListOfHTTP400 = keepListOfHTTP400;
-
-            Initialize(startTime, endTime);
-        }
-
-        private void Initialize(DateTime startTime, DateTime endTime)
-        {
-            StartInterval = startTime;
-            EndInterval = endTime;
-            TopOfInterval = new List<AccessLog>(_maxItemsInInterval);
-            LogsHTTP400OfInterval = new List<AccessLog>();
-            LogsHTTP500OfInterval = new List<AccessLog>();
-
-            AccessLogComparer = new AccessLogComparerByResponseTime();
-
-            _countOfHTTP500 = 0;
-            _countOfHTTP400 = 0;
-            _countOfHTTP300 = 0;
-            _totalCount = 0;
-
-            foreach (var point in StadisticalPoints)
+            Servers = new List<ServerInInterval>();
+            
+            var maxItemsInInterval = GetTopIntValueFromTopType(top);
+            foreach (var serverName in serverNames)
             {
-                StadisticalInformation.Add(point, 0);
+                var server = new ServerInInterval(this, serverName, maxItemsInInterval, keepListOfHTTP500, keepListOfHTTP400);
+                Servers.Add(server);
             }
         }
 
         internal bool IsEmpty()
         {
-            return _totalCount == 0;
+            var s2 = Servers.FirstOrDefault(s => !s.IsEmpty());
+            return s2 == null;
         }
 
-        internal void Add(AccessLog accessLog)
+        //internal void Add(string serverName, AccessLog accessLog)
+        //{
+        //    Servers[GetServerIndex(serverName)].Add(accessLog);
+        //}
+
+        //internal List<AccessLog> GetTopOfInterval(string serverName)
+        //{
+        //    return Servers[GetServerIndex(serverName)].TopOfInterval;
+        //}
+
+        //internal List<AccessLog> GetLogsHTTP500OfInterval(string serverName)
+        //{
+        //    return Servers[GetServerIndex(serverName)].LogsHTTP500OfInterval;
+        //}
+
+        //internal List<AccessLog> GetLogsHTTP400OfInterval(string serverName)
+        //{
+        //    return Servers[GetServerIndex(serverName)].LogsHTTP400OfInterval;
+        //}
+
+        internal void Add(int serverIndex, AccessLog accessLog)
         {
-            int index;
-
-            // sort insert, TopOfInterval contains just the slowest 'n' accessLogs
-            if (TopOfInterval.Count < _maxItemsInInterval)
-            {
-                index = TopOfInterval.BinarySearch(accessLog, AccessLogComparer);
-                if (index < 0) index = ~index;
-                TopOfInterval.Insert(index, accessLog);
-            }
-            else
-            {
-                // if the slowest accessLog of the collection is slower than the current accessLog, then delete it
-                if (TopOfInterval[0].ResponseTime < accessLog.ResponseTime)
-                {
-                    TopOfInterval.RemoveAt(0);
-
-                    index = TopOfInterval.BinarySearch(accessLog, AccessLogComparer);
-                    if (index < 0) index = ~index;
-                    TopOfInterval.Insert(index, accessLog);
-                }
-
-                // otherwise, don't add the accessLog to the collection
-            }
-
-            if (accessLog.ResponseCode >= 500)
-            {
-                if (_keepListOfHTTP500)
-                {
-                    LogsHTTP500OfInterval.Add(accessLog);
-                }
-
-                _countOfHTTP500++;
-            }
-            else if (accessLog.ResponseCode >= 400)
-            {
-                if (_keepListOfHTTP400)
-                {
-                    LogsHTTP400OfInterval.Add(accessLog);
-                }
-
-                _countOfHTTP400++;
-            } 
-            else if (accessLog.ResponseCode >= 300)
-            {
-                _countOfHTTP300++;
-            }
-
-            _totalCount++;
-
-            // add stadistical information of the accessLog
-            var stadisticalPoint = accessLog.IndexOfResponseTimeInArray(StadisticalPoints);
-            if (stadisticalPoint > 0)
-            {
-                StadisticalInformation[stadisticalPoint]++;    
-            }
+            Servers[serverIndex].Add(accessLog);
         }
 
-        internal static int CalculateInitialSize(IntervalSize interval)
+        internal List<AccessLog> GetTopOfInterval(int serverIndex)
+        {
+            return Servers[serverIndex].TopOfInterval;
+        }
+
+        internal List<AccessLog> GetLogsHTTP500OfInterval(int serverIndex)
+        {
+            return Servers[serverIndex].LogsHTTP500OfInterval;
+        }
+
+        internal List<AccessLog> GetLogsHTTP400OfInterval(int serverIndex)
+        {
+            return Servers[serverIndex].LogsHTTP400OfInterval;
+        }
+
+        public static int CalculateInitialSize(IntervalSize interval)
         {
             return (24 * 60) / GetMinutesFromInterval(interval);
         }
 
-        internal static int GetMinutesFromInterval(IntervalSize interval)
+        public static int GetMinutesFromInterval(IntervalSize interval)
         {
             switch (interval)
             {
@@ -231,8 +208,8 @@ namespace Abstracta.AccessLogAnalyzer
             var posiblesValores = Enum.GetNames(typeof(IntervalSize)).Aggregate(string.Empty, (current, value) => current + value);
             throw new Exception("Valor no reconocido: " + intervalName + ". Posibles valores: " + posiblesValores);
         }
-        
-        internal static int GetTopIntValueFromTopType(TopTypes top)
+
+        public static int GetTopIntValueFromTopType(TopTypes top)
         {
             switch (top)
             {
@@ -286,13 +263,13 @@ namespace Abstracta.AccessLogAnalyzer
             throw new Exception("Valor no reconocido: " + top + ". Posibles valores: " + posiblesValores);
         }
 
-        internal static string StadisticalHeaders
+        public static string StadisticalHeaders
         {
             get
             {
                 var res = "between 0  and " + StadisticalPoints[0] + " segs" + StrSeparator;
 
-                for (var i = 0; i < StadisticalPoints.Length -1; i++)
+                for (var i = 0; i < StadisticalPoints.Length - 1; i++)
                 {
                     res += "between " + StadisticalPoints[i] + " and " + StadisticalPoints[i + 1] + " segs" + StrSeparator;
                 }
@@ -301,24 +278,114 @@ namespace Abstracta.AccessLogAnalyzer
             }
         }
 
-        internal static readonly string ToStringHeader = "StartInterval" + StrSeparator +
-                                                         "TotalCount" + StrSeparator +
-                                                         "HTTP_5??" + StrSeparator +
-                                                         "HTTP_4??" + StrSeparator +
-                                                         "HTTP_3??" + StrSeparator +
-                                                         StadisticalHeaders;
+        public static string GetStringHeader(IList<string> serversName)
+        {
+            return GetFirstLine(serversName) + "\n" + GetSecondLine(serversName.Count());
+        } 
 
         public override string ToString()
         {
-            var stadisticalInformationString = String.Join(StrSeparator.ToString(CultureInfo.InvariantCulture),
-                                                           StadisticalInformation.Values.ToArray());
-            return "" + StartInterval + StrSeparator
-                   // + EndInterval + StrSeparator 
-                   + _totalCount + StrSeparator
-                   + _countOfHTTP500 + StrSeparator
-                   + _countOfHTTP400 + StrSeparator
-                   + _countOfHTTP300 + StrSeparator
-                   + stadisticalInformationString;
+            var serverId = 0;
+            var res = new StringBuilder();
+            foreach (var serverInInterval in Servers)
+            {
+                var stadisticalInformationString = String.Join(StrSeparator.ToString(CultureInfo.InvariantCulture),
+                                                               serverInInterval.RequestsByResponseTime.Values.ToArray());
+                if (serverId == 0)
+                {
+                    res.Append("" + StartInterval + StrSeparator
+                               + serverInInterval.TotalCount + StrSeparator
+                               + serverInInterval.CountOfHTTP500 + StrSeparator
+                               + serverInInterval.CountOfHTTP400 + StrSeparator
+                               + serverInInterval.CountOfHTTP300 + StrSeparator
+                               + stadisticalInformationString + StrSeparator);
+
+                }
+                else
+                {
+                    res.Append(""
+                               + serverInInterval.TotalCount + StrSeparator
+                               + serverInInterval.CountOfHTTP500 + StrSeparator
+                               + serverInInterval.CountOfHTTP400 + StrSeparator
+                               + serverInInterval.CountOfHTTP300 + StrSeparator
+                               + stadisticalInformationString + StrSeparator);
+                }
+
+                serverId++;
+            }
+
+            return res.ToString();
+        }
+
+        private static string GetFirstLine(IEnumerable<string> serversName)
+        {
+            var res = string.Empty;
+            var arrayTmp = new string[StadisticalPoints.Length];
+
+            var tmp = string.Join(StrSeparator.ToString(CultureInfo.InvariantCulture), arrayTmp);
+
+            var serverId = 0;
+            foreach (var s in serversName)
+            {
+                if (serverId == 0)
+                {
+                    res += s + StrSeparator +
+                           StrSeparator + // "TotalCount"
+                           StrSeparator + // "HTTP_5??"
+                           StrSeparator + // "HTTP_4??"
+                           StrSeparator + // "HTTP_3??"
+                           tmp + StrSeparator;
+
+                }
+                else
+                {
+                    res += s + StrSeparator +
+                           StrSeparator + // "TotalCount"
+                           StrSeparator + // "HTTP_5??"
+                           StrSeparator + // "HTTP_4??"
+                           StrSeparator + // "HTTP_3??"
+                           tmp;
+                }
+
+                serverId++;
+            }
+
+            return res;
+        }
+
+        private static string GetSecondLine(int serversCount)
+        {
+            var res = string.Empty;
+
+            for (var i = 0; i < serversCount; i++)
+            {
+                if (i == 0)
+                {
+                    res += "StartInterval" + StrSeparator +
+                           "TotalCount" + StrSeparator +
+                           "HTTP_5??" + StrSeparator +
+                           "HTTP_4??" + StrSeparator +
+                           "HTTP_3??" + StrSeparator +
+                           StadisticalHeaders;
+                }
+                else
+                {
+                    res += "TotalCount" + StrSeparator +
+                           "HTTP_5??" + StrSeparator +
+                           "HTTP_4??" + StrSeparator +
+                           "HTTP_3??" + StrSeparator +
+                           StadisticalHeaders;
+                }
+            }
+
+            return res;
+        }
+
+        private void Initialize(DateTime startTime, DateTime endTime)
+        {
+            StartInterval = startTime;
+            EndInterval = endTime;
+            AccessLogComparer = new AccessLogComparerByResponseTime();
         }
     }
 

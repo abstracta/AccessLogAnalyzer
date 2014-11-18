@@ -5,13 +5,14 @@
         public const string HelpTextStartProcess = "Runs the process without graphic UI";
         public const string HelpTextLineFormat = "Line format must be space separated. Line can contain the following: " + Constants.LineFormatDefaultValue;
         public const string HelpTextOutputFile = "Output file name";
-        public const string HelpTextLogHttp500 = "Log to file a list with the HTTP 5??. Default value: " + (Constants.LogHttp500DefaultValue ? "True" : "False");
-        public const string HelpTextLogHttp400 = "Log to file a list with the HTTP 4??. Default value: " + (Constants.LogHttp400DefaultValue ? "True" : "False");
-        public const string HelpTextFilterStaticRequests = "Discard all HTTP request to static resources. Default value: " + (Constants.FilterStaticRequestDefaultValue ? "True" : "False");
-        public const string HelpTextHideEmptyIntervals = "Hide empty intervals. Default value: " + (Constants.HideEmptyIntervalsDefaultValue ? "True" : "False");
+        public const string HelpTextLogHttp500 = "Log to file a list with the HTTP 5??";
+        public const string HelpTextLogHttp400 = "Log to file a list with the HTTP 4??";
+        public const string HelpTextFilterStaticRequests = "Discard all HTTP request to static resources";
+        public const string HelpTextHideEmptyIntervals = "Hide empty intervals";
         public const string HelpTextFilterFileName = "File that contains texts that will filter URLs. Uses 'contains' comparer. Doesn't compare parameters of URL";
-        public const string HelpTextFilter300 = "Discard all requests that have 300 <= RCode < 400. Default value: " + (Constants.Filter300DefaultValue ? "True" : "False");
-        public const string HelpTextVerbose = "Log to file internal info about AccessLogAnalizer. Default value: " + (Constants.VerboseDefaultValue ? "True" : "False");
+        public const string HelpTextFilter300 = "Discard all requests that have 300 <= RCode < 400";
+        public const string ConfigTextFilterFileName = "XML Config file allowing to set multiple servers and multiple files for each server";
+        public const string HelpTextVerbose = "Log to file internal info about AccessLogAnalizer";
 
         public const string HelpTextInterval = "Interval length in minutes";
         public const string HelpTextTop = "The 'n' slowest URLs on each interval";
@@ -40,6 +41,8 @@
         public abstract bool HideEmptyIntervals { get; set; }
 
         public abstract string FilterFileName { get; set; }
+
+        public abstract string ConfigFileName { get; set; }
 
         public abstract bool Filter300 { get; set; }
 

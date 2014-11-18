@@ -12,6 +12,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public IISDataExtractor(string format)
         {
+            LineFormat = format;
+
             throw new NotImplementedException(format);
         }
 

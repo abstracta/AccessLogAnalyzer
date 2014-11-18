@@ -15,6 +15,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public TomcatDataExtractor(string format)
         {
+            LineFormat = format;
+
             // HOST TIME URL RCODE RTIME RSIZE
             TemplateOrder = new[] { -1, -1, -1, -1, -1, -1 };
             var propertySource = new[] { 0, 0, 0, 0, 0, 0 };

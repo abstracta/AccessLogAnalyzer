@@ -53,6 +53,7 @@
     <Compile Include="FormatType.cs" />
     <Compile Include="GuiParameters.cs" />
     <Compile Include="Interval.cs" />
+    <Compile Include="ServerInInterval.cs" />
     <Compile Include="IntervalSize.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Procesor.cs" />

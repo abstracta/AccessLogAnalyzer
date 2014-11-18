@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using Abstracta.AccessLogAnalyzer;
-using Abstracta.AccessLogAnalyzer.DataExtractors;
 using CommandLine;
 
 namespace Abstracta.AccessLogAnalyzerUI
@@ -25,53 +24,47 @@ namespace Abstracta.AccessLogAnalyzerUI
 
                 if (options.StartProcess)
                 {
-                    options = new CommandLineParametersWhenNonGUI();
-
-                    if (!Parser.Default.ParseArguments(e.Args, options))
+                    if (string.IsNullOrEmpty(options.ConfigFileName))
                     {
-                        Current.Shutdown();
-                        return;
+                        options = new CommandLineParametersWhenNonGUI();
+
+                        if (!Parser.Default.ParseArguments(e.Args, options))
+                        {
+                            Current.Shutdown();
+                            return;
+                        }
                     }
 
-                    var inputFile = cm.GetValueAsString(Constants.InputFile);
-                    var outputFile = (string.IsNullOrWhiteSpace(cm.GetValueAsString(Constants.OutputFile)))
-                                          ? CommandLineParameterAux.CreateResultFileName(inputFile)
-                                          : cm.GetValueAsString(Constants.OutputFile);
-
-                    var format = cm.GetValueAsString(Constants.LineFormat);
-                    var serverType = cm.GetValueAsServerType(Constants.ServerType);
-
-                    if (serverType == ServerType.None)
+                    var outputFile = cm.GetValueAsString(Constants.OutputFile);
+                    if (string.IsNullOrEmpty(outputFile))
                     {
-                        Console.Out.WriteLine("Server type unknown: " + options.ServerType);
-                        Current.Shutdown();
-                        return;
+                        outputFile = Constants.OutputFileDefaultValue;
                     }
 
-                    var dateLineExtractor = DataExtractor.CreateDataExtractor(serverType, format);
+                    var servers = cm.GetListOfServerDefinitions();
 
                     var parameters = new GuiParameters
                     {
-                        IntervaloDefinido = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)),
+                        Servers = servers,
                         Top = Interval.GetTopTypeFromTopIntValue(cm.GetValueAsInteger(Constants.Top)),
-                        LogFileName = inputFile,
+                        IntervaloDefinido = Interval.GetIntervalFromMinutes(cm.GetValueAsInteger(Constants.Interval)),
+                        
                         ResultFileName = outputFile,
-                        HideEmptyIntervals = cm.GetValueAsBool(Constants.HideEmptyIntervals),
                         LogHTTP500List = cm.GetValueAsBool(Constants.LogHttp500),
                         LogHTTP400List = cm.GetValueAsBool(Constants.LogHttp400),
-                        FilterStaticReqs = cm.GetValueAsBool(Constants.FilterStaticRequests),
+                        HideEmptyIntervals = cm.GetValueAsBool(Constants.HideEmptyIntervals),
+
                         Verbose = cm.GetValueAsBool(Constants.Verbose),
-                        Filter300 = cm.GetValueAsBool(Constants.Filter300),
-                        DataLineExtractor = dateLineExtractor,
-                        ServerType = serverType,
                     };
 
-                    var result = Procesor.ProcessAccessLog(null, parameters);
+                    URLFilterSingleton.GetInstance().UpdateFilter(cm.GetValueAsString(Constants.FilterFileName));
+
+                    var result = Procesor.ProcessAccessLog(null, parameters, LoggerType.Console);
                     if (result != null)
                     {
                         if (result.Count == 0)
                         {
-                            Console.WriteLine(@"There are NO (zero) matching lines acording to format.");
+                            Console.WriteLine(@"There are NO (zero) matching lines according to format.");
                         }
                         else
                         {

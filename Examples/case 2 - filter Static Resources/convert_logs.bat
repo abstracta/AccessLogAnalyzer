@@ -1,8 +1,8 @@
 
-: \S any character that isn't a white space
-: \d any number character (digit)
-: ^ line start
-: $ line end
+:: \S any character that isn't a white space
+:: \d any number character (digit)
+:: ^ line start
+:: $ line end
 
 
 ..\Abstracta.ReplaceAll_NET4.0.exe -i accessLog_web1_anonimizado.log -x -r "(^\S+) \[(.*) -0300\] (\S+) (\d+) (\d+$)" -w "\t"

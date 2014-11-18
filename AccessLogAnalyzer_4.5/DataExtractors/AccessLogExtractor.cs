@@ -45,6 +45,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         public AccessLogExtractor(string format)
         {
+            LineFormat = format;
+
             if (format.Contains(StrMicrosecond))
             {
                 TimeUnit = TimeUnitType.Microseconds;
@@ -90,7 +92,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                         TemplateOrder[RTIME] = i;
                         break;
                     case StrREndTime:
-                        // todo, add support for this case
+                        // todo, add support for case END TIME
                         TemplateOrder[RTIME] = i;
                         break;
                     case StrRsize:
