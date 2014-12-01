@@ -284,8 +284,7 @@ namespace Abstracta.AccessLogAnalyzer
         } 
 
         public override string ToString()
-        {
-            var serverId = 0;
+        {var serverId = 0;
             var res = new StringBuilder();
             foreach (var serverInInterval in Servers)
             {
@@ -293,7 +292,7 @@ namespace Abstracta.AccessLogAnalyzer
                                                                serverInInterval.RequestsByResponseTime.Values.ToArray());
                 if (serverId == 0)
                 {
-                    res.Append("" + StartInterval + StrSeparator
+                    res.Append(StartInterval.ToString("dd/MM/yyyy H:mm:ss") + StrSeparator
                                + serverInInterval.TotalCount + StrSeparator
                                + serverInInterval.CountOfHTTP500 + StrSeparator
                                + serverInInterval.CountOfHTTP400 + StrSeparator

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
@@ -129,7 +128,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                     // r - First line of the request (method and request URI)
                 else if (FormatItems[i].StartsWith("%r"))
                 {
-                    FormatItems[i] = FormatItems[i].Replace("%r", "(\\S+ \\S+) HTTP?/\\S+");
+                    FormatItems[i] = FormatItems[i].Replace("%r", "(\\S+ .+) HTTP?/\\S+");
                     TemplateOrder[URL] = j;
                     j++;
                 }
@@ -149,7 +148,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                     // t - Date and time, in Common Log Format
                 else if (FormatItems[i].StartsWith("%t"))
                 {
-                    FormatItems[i] = FormatItems[i].Replace("%t", "\\[(\\S+) \\S+\\]");
+                    FormatItems[i] = FormatItems[i].Replace("%t", "\\[(\\S+ \\S+)\\]");
                     TemplateOrder[TIME] = j;
                     j++;
                 }
@@ -225,22 +224,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         protected override DateTime FormatDateTime(string value)
         {
-            value = value.Replace("/Jan/", "/01/");
-            value = value.Replace("/Feb/", "/02/");
-            value = value.Replace("/Mar/", "/03/");
-            value = value.Replace("/Apr/", "/04/");
-            value = value.Replace("/May/", "/05/");
-            value = value.Replace("/Jun/", "/06/");
-            value = value.Replace("/Jul/", "/07/");
-            value = value.Replace("/Aug/", "/08/");
-            value = value.Replace("/Sep/", "/09/");
-            value = value.Replace("/Oct/", "/10/");
-            value = value.Replace("/Nov/", "/11/");
-            value = value.Replace("/Dec/", "/12/");
-            
-            value = Regex.Replace(value, "(\\S+):(\\d\\d.\\d\\d.\\d\\d)", "$1 $2");
-
-            return DateTime.Parse(value);
+            return ExtractDateHttpdTomcatJBoss(value);
         }
     }
 }

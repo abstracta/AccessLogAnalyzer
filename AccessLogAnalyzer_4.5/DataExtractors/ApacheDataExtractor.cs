@@ -55,11 +55,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 }
                 else if (TemplateOrder[TIME] == i)
                 {
-                    Pattern += elements[i].Replace("%t", "\\[(\\S+) \\S+\\]");
+                    Pattern += elements[i].Replace("%t", "\\[(\\S+ \\S+)\\]");
                 }
                 else if (TemplateOrder[URL] == i)
                 {
-                    Pattern += elements[i].Replace("%r", "(\\S+ \\S+) HTTP?/\\S+");
+                    Pattern += elements[i].Replace("%r", "(\\S+ .+) HTTP?/\\S+");
                 }
                 else if (TemplateOrder[RCODE] == i)
                 {
@@ -99,22 +99,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         protected override DateTime FormatDateTime(string value)
         {
-            value = value.Replace("/Jan/", "/01/");
-            value = value.Replace("/Feb/", "/02/");
-            value = value.Replace("/Mar/", "/03/");
-            value = value.Replace("/Apr/", "/04/");
-            value = value.Replace("/May/", "/05/");
-            value = value.Replace("/Jun/", "/06/");
-            value = value.Replace("/Jul/", "/07/");
-            value = value.Replace("/Aug/", "/08/");
-            value = value.Replace("/Sep/", "/09/");
-            value = value.Replace("/Oct/", "/10/");
-            value = value.Replace("/Nov/", "/11/");
-            value = value.Replace("/Dec/", "/12/");
-            
-            value = Regex.Replace(value, "(\\S+):(\\d\\d.\\d\\d.\\d\\d)", "$1 $2");
-
-            return DateTime.Parse(value);
+            return ExtractDateHttpdTomcatJBoss(value);
         }
 
         private static int FindIndexOf(IList<string> elementList, IEnumerable<string> elementsToFind)

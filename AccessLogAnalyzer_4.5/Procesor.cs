@@ -109,8 +109,6 @@ namespace Abstracta.AccessLogAnalyzer
                 Logger.GetInstance().AddLog(@"Server info processed: " + serverParameters.ServerName);
             }
 
-            Logger.GetInstance().SaveLogsToFile();
-
             return intervals;
         }
 
@@ -284,7 +282,10 @@ namespace Abstracta.AccessLogAnalyzer
                     }
                 }
             }
+        }
 
+        public static void SaveLogFile()
+        {
             Logger.GetInstance().SaveLogsToFile();
         }
 

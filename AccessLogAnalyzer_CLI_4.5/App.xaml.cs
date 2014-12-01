@@ -14,6 +14,7 @@ namespace Abstracta.AccessLogAnalyzerUI
             if (!Parser.Default.ParseArguments(e.Args, options))
             {
                 Current.Shutdown();
+                Procesor.SaveLogFile();
                 return;
             }
 
@@ -73,11 +74,13 @@ namespace Abstracta.AccessLogAnalyzerUI
                         }
                     }
 
+                    Procesor.SaveLogFile();
                     Current.Shutdown();
                 }
             }
             catch (Exception ex)
             {
+                Procesor.SaveLogFile();
                 Console.WriteLine(ex.Message);
                 Current.Shutdown();
             }
