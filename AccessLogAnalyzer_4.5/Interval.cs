@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -46,7 +45,7 @@ namespace Abstracta.AccessLogAnalyzer
 
         public readonly static int[] StadisticalPoints = new[] { 2, 4, 6, 8, 10, 15, 20, 30, 40, 60, 80, 100, 120, int.MaxValue };
 
-        public const char StrSeparator = '\t';
+        public const string StrSeparator = "\t";
 
         public DateTime StartInterval { get; private set; }
 
@@ -112,6 +111,11 @@ namespace Abstracta.AccessLogAnalyzer
         internal List<AccessLog> GetLogsHTTP400OfInterval(int serverIndex)
         {
             return Servers[serverIndex].LogsHTTP400OfInterval;
+        }
+
+        internal void IncrementServerReestarts(int serverIndex)
+        {
+            Servers[serverIndex].IncrementServerReestarts();
         }
 
         public static int CalculateInitialSize(IntervalSize interval)
@@ -288,7 +292,7 @@ namespace Abstracta.AccessLogAnalyzer
             var res = new StringBuilder();
             foreach (var serverInInterval in Servers)
             {
-                var stadisticalInformationString = String.Join(StrSeparator.ToString(CultureInfo.InvariantCulture),
+                var stadisticalInformationString = String.Join(StrSeparator,
                                                                serverInInterval.RequestsByResponseTime.Values.ToArray());
                 if (serverId == 0)
                 {
@@ -297,6 +301,7 @@ namespace Abstracta.AccessLogAnalyzer
                                + serverInInterval.CountOfHTTP500 + StrSeparator
                                + serverInInterval.CountOfHTTP400 + StrSeparator
                                + serverInInterval.CountOfHTTP300 + StrSeparator
+                               + serverInInterval.ReestartsCount + StrSeparator
                                + stadisticalInformationString + StrSeparator);
 
                 }
@@ -307,6 +312,7 @@ namespace Abstracta.AccessLogAnalyzer
                                + serverInInterval.CountOfHTTP500 + StrSeparator
                                + serverInInterval.CountOfHTTP400 + StrSeparator
                                + serverInInterval.CountOfHTTP300 + StrSeparator
+                               + serverInInterval.ReestartsCount + StrSeparator
                                + stadisticalInformationString + StrSeparator);
                 }
 
@@ -318,35 +324,19 @@ namespace Abstracta.AccessLogAnalyzer
 
         private static string GetFirstLine(IEnumerable<string> serversName)
         {
-            var res = string.Empty;
+            var res = StrSeparator;
             var arrayTmp = new string[StadisticalPoints.Length];
 
-            var tmp = string.Join(StrSeparator.ToString(CultureInfo.InvariantCulture), arrayTmp);
+            var tmp = string.Join(StrSeparator, arrayTmp) + StrSeparator;
 
-            var serverId = 0;
             foreach (var s in serversName)
             {
-                if (serverId == 0)
-                {
-                    res += s + StrSeparator +
-                           StrSeparator + // "TotalCount"
-                           StrSeparator + // "HTTP_5??"
-                           StrSeparator + // "HTTP_4??"
-                           StrSeparator + // "HTTP_3??"
-                           tmp + StrSeparator;
-
-                }
-                else
-                {
-                    res += s + StrSeparator +
-                           StrSeparator + // "TotalCount"
-                           StrSeparator + // "HTTP_5??"
-                           StrSeparator + // "HTTP_4??"
-                           StrSeparator + // "HTTP_3??"
-                           tmp;
-                }
-
-                serverId++;
+                res += s + StrSeparator + // "TotalCount"
+                       StrSeparator + // "HTTP_5??"
+                       StrSeparator + // "HTTP_4??"
+                       StrSeparator + // "HTTP_3??"
+                       StrSeparator + // "ReestartsCount"
+                       tmp;
             }
 
             return res;
@@ -365,6 +355,7 @@ namespace Abstracta.AccessLogAnalyzer
                            "HTTP_5??" + StrSeparator +
                            "HTTP_4??" + StrSeparator +
                            "HTTP_3??" + StrSeparator +
+                           "ReestartsCount" + StrSeparator + 
                            StadisticalHeaders;
                 }
                 else
@@ -373,6 +364,7 @@ namespace Abstracta.AccessLogAnalyzer
                            "HTTP_5??" + StrSeparator +
                            "HTTP_4??" + StrSeparator +
                            "HTTP_3??" + StrSeparator +
+                           "ReestartsCount" + StrSeparator + 
                            StadisticalHeaders;
                 }
             }

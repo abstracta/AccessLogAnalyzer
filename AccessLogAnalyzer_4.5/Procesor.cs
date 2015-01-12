@@ -132,7 +132,7 @@ namespace Abstracta.AccessLogAnalyzer
             {
                 // remove last empty values
                 var i = result.Count - 1;
-                while (result[i].IsEmpty())
+                while (i >= 0 && result[i].IsEmpty())
                 {
                     result.RemoveAt(i);
                     i--;
@@ -205,13 +205,13 @@ namespace Abstracta.AccessLogAnalyzer
                                 file.WriteLine(accessLog);
                             }
 
-                            if (urls.ContainsKey(accessLog.URL))
+                            if (urls.ContainsKey(accessLog.URLWithoutParameters))
                             {
-                                urls[accessLog.URL]++;
+                                urls[accessLog.URLWithoutParameters]++;
                             }
                             else
                             {
-                                urls.Add(accessLog.URL, 1);
+                                urls.Add(accessLog.URLWithoutParameters, 1);
                             }
                         }
                     }
@@ -321,7 +321,16 @@ namespace Abstracta.AccessLogAnalyzer
                 }
             }
 
-            intervalOfRequest.Add(serverIndex, accessLog);
+            // todo this is a reestart log instead of an access log
+            // todo need to implement abstracta log, and siblings - access, restart, error, etc
+            if (accessLog.ContainsReestart)
+            {
+                intervalOfRequest.IncrementServerReestarts(serverIndex);
+            }
+            else
+            {
+                intervalOfRequest.Add(serverIndex, accessLog);    
+            }
 
             return intervals;
         }

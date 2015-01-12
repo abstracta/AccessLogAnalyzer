@@ -98,6 +98,8 @@ namespace Abstracta.AccessLogAnalyzerUI
             _worker.DoWork += ProcessFileAndSaveResults;
             _worker.ProgressChanged += UpdateProgressStatus;
             _worker.RunWorkerCompleted += ProcessCompleted;
+
+            TxtInputFile.Text = @"C:\Users\Simon\Desktop\FRONT2013-1.log";
         }
 
         private void ProcessAccessLog(object sender, RoutedEventArgs e)
@@ -134,7 +136,9 @@ namespace Abstracta.AccessLogAnalyzerUI
                                     ? "APACHE"
                                     : serverType == ServerType.Tomcat
                                           ? "TOMCAT"
-                                          : serverType == ServerType.IIS ? "IIS" : "SERVER",
+                                          : serverType == ServerType.IIS ? 
+                                            "IIS" 
+                                            : serverType == ServerType.JBoss ? "JBOSS" : "SERVER",
                 };
 
             var parameters = new GuiParameters
@@ -231,11 +235,21 @@ namespace Abstracta.AccessLogAnalyzerUI
             var cm = ConfigurationManager.GetInstance();
 
             cm.GetListOfServerDefinitions()[0].ServerType = serverType;
+            var serverName = cm.GetListOfServerDefinitions()[0].ServerName;
 
             LabelLineFormat.ToolTip =
                 TxtLineFormat.ToolTip =
                 ComboServerType.ToolTip =
-                LabelServerType.ToolTip = cm.GetLineFormat(cm.GetListOfServerDefinitions()[0].ServerName);
+                LabelServerType.ToolTip = cm.GetLineFormat(serverName);
+
+            if (!cm.ServerTypeNeedsParameters(serverType))
+            {
+                TxtLineFormat.IsEnabled = false;
+            }
+            else
+            {
+                TxtLineFormat.IsEnabled = true;
+            }
 
             // todo if  TxtLineFormat is example content of a serverType, then change to the new example content
         }

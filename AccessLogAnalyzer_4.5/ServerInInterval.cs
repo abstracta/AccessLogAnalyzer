@@ -28,6 +28,13 @@ namespace Abstracta.AccessLogAnalyzer
 
         public int TotalCount { get; private set; }
 
+        public int ReestartsCount { get; private set; }
+
+        internal void IncrementServerReestarts()
+        {
+            ReestartsCount++;
+        }
+
         internal ServerInInterval(Interval myInterval, string serverName, int top, bool keepListOfHTTP500, bool keepListOfHTTP400)
         {
             ServerName = serverName;
@@ -39,6 +46,8 @@ namespace Abstracta.AccessLogAnalyzer
             TopOfInterval = new List<AccessLog>(top);
             LogsHTTP400OfInterval = new List<AccessLog>();
             LogsHTTP500OfInterval = new List<AccessLog>();
+
+            ReestartsCount = 0;
 
             CountOfHTTP500 = 0;
             CountOfHTTP400 = 0;

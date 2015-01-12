@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
@@ -6,18 +8,25 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
     {
         // https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/valves/AccessLogValve.html
 
+        public new bool NeedParameters = true;
+
         public static string Parameters
         {
-            get { return "%A %b %B %H %m %p %q %r %s %t %U %v %T %I"; }
+            get { return "%A %b %B %H \"%{Referer}i\" \"%{User-Agent}i\" %m %p %q %r %s %t %U %v %T %I"; }
         }
-
-
+        
+        // TODO: replace the way it works by the way Apache Data Extractor works.
         public TomcatDataExtractor(string format)
         {
             LineFormat = format;
 
             // HOST TIME URL RCODE RTIME RSIZE
-            TemplateOrder = new[] { -1, -1, -1, -1, -1, -1 };
+            TemplateOrder = new[]
+                {
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue, 
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue
+                };
+
             var propertySource = new[] { 0, 0, 0, 0, 0, 0 };
 
             // create regular expression from format string
@@ -160,7 +169,17 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                     // U - Requested URL path
                 else if (FormatItems[i].StartsWith("%U"))
                 {
-                    FormatItems[i] = FormatItems[i].Replace("%U", "\\S+");
+                    var hasURL = FormatItems.FirstOrDefault(formatItem => formatItem.StartsWith("%r")) != null;
+                    if (TemplateOrder[URL] == -1 && !hasURL)
+                    {
+                        FormatItems[i] = FormatItems[i].Replace("%U", "(\\S+)");
+                        TemplateOrder[URL] = j;
+                        j++;
+                    }
+                    else
+                    {
+                        FormatItems[i] = FormatItems[i].Replace("%U", "\\S+");    
+                    }
                 }
                     // v - Local server name
                 else if (FormatItems[i].StartsWith("%v"))
@@ -213,6 +232,19 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 else if (FormatItems[i].StartsWith("%I"))
                 {
                     FormatItems[i] = FormatItems[i].Replace("%I", "\\S+");
+                }
+                else
+                {
+                    // all other 'one digit' elements that aren't used
+                    const string regExp1 = "(.*)(%[AfHklLmpPqRuUvVXIOS])(.*)";
+
+                    // all elements of the form '%{name}?'
+                    const string regExp2 = "(.*)(%\\{\\S+\\}[CeinopPt])(.*)";
+
+                    var t1 = Regex.Replace(FormatItems[i], regExp1, "$1\\S+$3");
+                    var t2 = Regex.Replace(FormatItems[i], regExp2, "$1[^\"]*$3");
+
+                    FormatItems[i] = (t1 == FormatItems[i]) ? t2 : t1;
                 }
             }
 

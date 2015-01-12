@@ -67,6 +67,9 @@
     <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\IISDataExtractor.cs">
       <Link>DataExtractors\IISDataExtractor.cs</Link>
     </Compile>
+    <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\ServerType.cs">
+      <Link>DataExtractors\ServerType.cs</Link>
+    </Compile>
     <Compile Include="..\AccessLogAnalyzer_4.5\DataExtractors\TomcatDataExtractor.cs">
       <Link>DataExtractors\TomcatDataExtractor.cs</Link>
     </Compile>

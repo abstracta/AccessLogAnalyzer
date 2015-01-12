@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Abstracta.AccessLogAnalyzer.DataExtractors;
 
 namespace Abstracta.AccessLogAnalyzer
 {
     internal class AccessLog
     {
-        private const char StrSeparator = '\t';
+        private const string StrSeparator = "\t";
 
         internal string Host { get; set; }
 
         internal DateTime Time { get; set; }
 
-        internal string URL { get; set; }
+        internal string URLWithoutParameters { get; set; }
+
+        internal string ParametersFromURL { get; set; }
 
         internal int ResponseCode { get; set; }
 
@@ -23,13 +27,16 @@ namespace Abstracta.AccessLogAnalyzer
 
         internal DataExtractor DataLineExtractor { get; private set; }
 
+        internal bool ContainsReestart { get; private set; }
+
         private AccessLog(DataExtractor lineFormat)
         {
             Host = string.Empty;
             Time = DateTime.Now;
-            URL = string.Empty;
+            URLWithoutParameters = string.Empty;
             ResponseCode = 0;
             ResponseTime = -1;
+            ContainsReestart = false;
 
             UnitType = lineFormat.TimeUnit;
             DataLineExtractor = lineFormat;
@@ -37,27 +44,43 @@ namespace Abstracta.AccessLogAnalyzer
 
         internal static AccessLog CreateFromLine(DataExtractor formatedLine, bool filterStaticRequests, bool filter300)
         {
+            if (!formatedLine.IsValid())
+            {
+                Logger.GetInstance().AddLog("Line discarded: " + formatedLine.Line);
+                return null;
+            }
+
             var result = new AccessLog(formatedLine);
 
             try
             {
-                result.URL = formatedLine.Url;
-                if (filterStaticRequests && URLFilterSingleton.IsStaticResource(result.URL))
+                var urlWithoutParameters = formatedLine.Url;
+                var parameters = string.Empty;
+                if (formatedLine.Url.Contains("?"))
                 {
-                    Logger.GetInstance().AddLog("Static resource filtered: " + result.URL);
+                    urlWithoutParameters = Regex.Replace(formatedLine.Url, "\\?.*", "?");
+                    parameters = Regex.Replace(formatedLine.Url, ".*\\?", "?");
+                }
+
+                result.URLWithoutParameters = urlWithoutParameters;
+                if (filterStaticRequests && URLFilterSingleton.IsStaticResource(result.URLWithoutParameters))
+                {
+                    Logger.GetInstance().AddLog("Static resource filtered: " + result.URLWithoutParameters);
                     return null;
                 }
 
                 // Filter URLs
-                if (URLFilterSingleton.GetInstance().DiscardUrlByFilterRules(result.URL))
+                if (URLFilterSingleton.GetInstance().DiscardUrlByFilterRules(result.URLWithoutParameters))
                 {
-                    Logger.GetInstance().AddLog("URL filtered: " + result.URL);
+                    Logger.GetInstance().AddLog("URL filtered: " + result.URLWithoutParameters);
                     return null;
                 }
+
+                result.ParametersFromURL = parameters;
             }
             catch (Exception)
             {
-                Logger.GetInstance().AddLog("URL Malformed: " + formatedLine.Line);
+                Logger.GetInstance().AddLog("Line Malformed: " + formatedLine.Line);
                 return null;
             }
 
@@ -66,7 +89,7 @@ namespace Abstracta.AccessLogAnalyzer
                 result.ResponseCode = formatedLine.ResponseCode;
                 if (filter300 && result.ResponseCode >= 300 && result.ResponseCode < 400)
                 {
-                    Logger.GetInstance().AddLog("URL filtered by 3??: " + result.URL);
+                    Logger.GetInstance().AddLog("URL filtered by 3??: " + result.URLWithoutParameters);
                     return null;
                 }
             }
@@ -95,18 +118,21 @@ namespace Abstracta.AccessLogAnalyzer
                 result.ResponseSize = 0;
             }
 
+            result.ContainsReestart = formatedLine.ContainsReestart;
+
             return result;
         }
 
         public override string ToString()
         {
             return
-                (DataLineExtractor.Contains(DataExtractor.HOST) ? ("" + Host + StrSeparator) : string.Empty) +
-                (DataLineExtractor.Contains(DataExtractor.TIME) ? ("" + Time + StrSeparator) : string.Empty) +
-                (DataLineExtractor.Contains(DataExtractor.URL) ? ("" + URL + StrSeparator) : string.Empty) +
-                (DataLineExtractor.Contains(DataExtractor.RCODE) ? ("" + ResponseCode + StrSeparator) : string.Empty) +
-                (DataLineExtractor.Contains(DataExtractor.RSIZE) ? ("" + ResponseSize + StrSeparator) : string.Empty) +
-                (DataLineExtractor.Contains(DataExtractor.RTIME) ? ("" + ResponseTime) : string.Empty);
+                (DataLineExtractor.Contains(DataExtractor.HOST) ? (Host + StrSeparator) : "?" + StrSeparator) +
+                (DataLineExtractor.Contains(DataExtractor.TIME) ? (Time.ToString("dd/MM/yyyy H:mm:ss") + StrSeparator) : "?" + StrSeparator) +
+                (DataLineExtractor.Contains(DataExtractor.URL) ? (URLWithoutParameters + StrSeparator) : "?" + string.Empty) +
+                (DataLineExtractor.Contains(DataExtractor.RCODE) ? (ResponseCode.ToString(CultureInfo.CurrentCulture) + StrSeparator) : "?" + StrSeparator) +
+                (DataLineExtractor.Contains(DataExtractor.RSIZE) ? (ResponseSize.ToString(CultureInfo.CurrentCulture) + StrSeparator) : "?" + StrSeparator) +
+                (DataLineExtractor.Contains(DataExtractor.RTIME) ? (ResponseTime.ToString(CultureInfo.CurrentCulture) + StrSeparator) : "?" + StrSeparator) +
+                (DataLineExtractor.Contains(DataExtractor.URL) ? (ParametersFromURL) : "-" + string.Empty);
         }
 
         public int IndexOfResponseTimeInArray(int[] stadisticalPoints)

@@ -5,17 +5,10 @@ using System.Text.RegularExpressions;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
-    public enum ServerType
-    {
-        Apache, 
-        IIS,
-        Tomcat,
-        AccessLogFormat,
-        None,
-    }
-
     public abstract class DataExtractor
     {
+        protected const int TemplateOrderInitValue = -1;
+
         // TOMCAT: h, a
         public string RemoteHost { get; protected set; }
 
@@ -37,23 +30,140 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
         // TOMCAT: From ResponseTime
         public TimeUnitType TimeUnit { get; protected set; }
 
+        public bool ContainsReestart { get; protected set; }
+
         public string Line { get; protected set; }
 
         public string LineFormat { get; protected set; }
 
+        public virtual bool NeedParameters { get; protected set; }
+
         // indexes
-        public const int HOST = 0;
-        public const int TIME = 1;
-        public const int URL = 2;
-        public const int RCODE = 3;
-        public const int RTIME = 4;
-        public const int RSIZE = 5;
+        public const int HOST   = 0;
+        public const int TIME   = 1;
+        public const int URL    = 2;
+        public const int RCODE  = 3;
+        public const int RTIME  = 4;
+        public const int RSIZE  = 5;
+        public const int DATE   = 6;
+        public const int METHOD = 7;
+        public const int QUERY  = 8;
+
+        public const string EmptyValue = "-";
 
         protected string[] FormatItems;
         protected int[] TemplateOrder;
         protected string Pattern;
 
+        protected DataExtractor()
+        {
+            ContainsReestart = false;
+        }
+
         public virtual void SetLine(string input)
+        {
+            SetValuesFromLine(input);
+        }
+
+        public virtual bool Contains(int parameter)
+        {
+            return TemplateOrder[parameter] != TemplateOrderInitValue;
+        }
+
+        public static DataExtractor CreateDataExtractor(string serverType, string format)
+        {
+            return CreateDataExtractor(GetServerTypeFromString(serverType), format);
+        }
+
+        public static ServerType GetServerTypeFromString(string serverTypeStr)
+        {
+            switch (serverTypeStr.ToLower())
+            {
+                case "apache":
+                    return ServerType.Apache;
+
+                case "tomcat":
+                    return ServerType.Tomcat;
+
+                case "iis":
+                    return ServerType.IIS;
+
+                case "jboss":
+                    return ServerType.JBoss;
+
+                case "accesslogformat":
+                    return ServerType.AccessLogFormat;
+
+                default:
+                    return ServerType.None;
+            }
+        }
+
+        public static DataExtractor CreateDataExtractor(ServerType serverType, string format)
+        {
+            switch (serverType)
+            {
+                case ServerType.Apache:
+                    return new ApacheDataExtractor(format);
+
+                case ServerType.JBoss:
+                case ServerType.Tomcat:
+                    return new TomcatDataExtractor(format);
+
+                case ServerType.IIS:
+                    return new IISDataExtractor();
+
+                case ServerType.AccessLogFormat:
+                    return new AccessLogExtractor(format);
+            }
+
+            return null;
+        }
+
+        public static string ParametersOfServerType(ServerType serverType)
+        {
+            switch (serverType)
+            {
+                case ServerType.Apache:
+                    return ApacheDataExtractor.Parameters;
+
+                case ServerType.JBoss:
+                case ServerType.Tomcat:
+                    return TomcatDataExtractor.Parameters;
+
+                case ServerType.IIS:
+                    return IISDataExtractor.Parameters;
+
+                default:
+                    return AccessLogExtractor.Parameters;
+            }
+        }
+
+        public static bool ServerTypeNeedsParameters(ServerType serverType)
+        {
+            switch (serverType)
+            {
+                case ServerType.IIS:
+                    return false;
+
+                default:
+                    return true;
+            }
+        }
+
+        public bool IsValid()
+        {
+            return Line != null && Url != null;
+        }
+
+        protected abstract DateTime FormatDateTime(string dateTime);
+
+        protected DateTime FormatDateTime(string date, string time)
+        {
+            return DateTime.Parse(date + " " + time);
+        }
+
+        protected void SetValuesFromLine(string input, ServerType sType = ServerType.AccessLogFormat)
         {
             // Execute the Regular Expression to extract the values
             try
@@ -62,16 +172,27 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
                 var groups = Regex.Match(input, Pattern).Groups;
 
-                if (TemplateOrder[HOST] != 0)
+                if (LineContains(HOST))
                 {
                     RemoteHost = groups[TemplateOrder[HOST]].Value;
                 }
 
-                Time = FormatDateTime(groups[TemplateOrder[TIME]].Value);
-                Url = groups[TemplateOrder[URL]].Value;
+                if (sType == ServerType.IIS)
+                {
+                    Time = FormatDateTime(groups[TemplateOrder[DATE]].Value, groups[TemplateOrder[TIME]].Value);
+                    Url = groups[TemplateOrder[METHOD]].Value + " " + 
+                          groups[TemplateOrder[URL]].Value +
+                          (LineContains(QUERY) && groups[TemplateOrder[QUERY]].Value != EmptyValue ? "?" + groups[TemplateOrder[QUERY]].Value : string.Empty);
+                }
+                else
+                {
+                    Time = FormatDateTime(groups[TemplateOrder[TIME]].Value);
+                    Url = groups[TemplateOrder[URL]].Value;
+                }
+                
                 ResponseCode = int.Parse(groups[TemplateOrder[RCODE]].Value);
 
-                if (TemplateOrder[RSIZE] != 0)
+                if (LineContains(RSIZE))
                 {
                     ResponseSize = GetResponseSize(groups[TemplateOrder[RSIZE]].Value);
                 }
@@ -84,12 +205,10 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             }
         }
 
-        public virtual bool Contains(int parameter)
+        protected bool LineContains(int value)
         {
-            return TemplateOrder[parameter] > 0;
+            return TemplateOrder[value] != TemplateOrderInitValue;
         }
-
-        protected abstract DateTime FormatDateTime(string value);
 
         protected static string CreatRegExpTemplate(IList<int> templateOrder)
         {
@@ -156,24 +275,24 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         protected static void ValidateFormat(int[] templateOrderList)
         {
-            if (templateOrderList[URL] == -1)
+            if (templateOrderList[URL] == TemplateOrderInitValue)
             {
-                throw new Exception("Parameter for URL not present: " + "'%r' / URL");
+                throw new Exception("Parameter for URL not present: " + "'%r','%U' / URL");
             }
 
-            if (templateOrderList[TIME] == -1)
+            if (templateOrderList[TIME] == TemplateOrderInitValue)
             {
                 throw new Exception("Parameter for TIME not present: " + "'%t' / TIME");
             }
 
-            if (templateOrderList[RTIME] == -1)
+            if (templateOrderList[RTIME] == TemplateOrderInitValue)
             {
                 throw new Exception("Parameter for RESPONSE TIME not present: " + "'%D','%T' / RTIME");
             }
 
-            if (templateOrderList[RCODE] == -1)
+            if (templateOrderList[RCODE] == TemplateOrderInitValue)
             {
-                throw new Exception("Parameter for RESPONSE CODE not present: " + "'%>s' / RCODE");
+                throw new Exception("Parameter for RESPONSE CODE not present: " + "'%s' / RCODE");
             }
         }
 
@@ -182,47 +301,20 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             return value == "-" ? 0 : long.Parse(value);
         }
 
-        public static ServerType GetServerTypeFromString(string serverTypeStr)
+        protected static int FindIndexOf(IList<string> elementList, IEnumerable<string> elementsToFind)
         {
-            switch (serverTypeStr.ToLower())
+            foreach (var t in elementsToFind)
             {
-                case "apache":
-                    return ServerType.Apache;
-
-                case "tomcat":
-                    return ServerType.Tomcat;
-                    
-                case "iis":
-                    return ServerType.IIS;
-
-                case "accesslogformat":
-                    return ServerType.AccessLogFormat;
-
-                default:
-                    return ServerType.None;
-            }
-        }
-
-        public static DataExtractor CreateDataExtractor(string serverType, string format)
-        {
-            return CreateDataExtractor(GetServerTypeFromString(serverType), format);
-        }
-
-        public static DataExtractor CreateDataExtractor(ServerType serverType, string format)
-        {
-            switch (serverType)
-            {
-                case ServerType.Apache:
-                    return new ApacheDataExtractor(format);
-                case ServerType.Tomcat:
-                    return new TomcatDataExtractor(format);
-                case ServerType.IIS:
-                    return new IISDataExtractor(format);
-                case ServerType.AccessLogFormat:
-                    return new AccessLogExtractor(format);
+                for (var j = 0; j < elementList.Count; j++)
+                {
+                    if (elementList[j].StartsWith(t))
+                    {
+                        return j;
+                    }
+                }
             }
 
-            return null;
+            return -1;
         }
 
         protected static DateTime ExtractDateHttpdTomcatJBoss(string value)

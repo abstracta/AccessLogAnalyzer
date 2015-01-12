@@ -49,8 +49,8 @@
     <Compile Include="DataExtractors\AccessLogExtractor.cs" />
     <Compile Include="DataExtractors\IISDataExtractor.cs" />
     <Compile Include="DataExtractors\DataExtractor.cs" />
+    <Compile Include="DataExtractors\ServerType.cs" />
     <Compile Include="DataExtractors\TomcatDataExtractor.cs" />
-    <Compile Include="FormatType.cs" />
     <Compile Include="GuiParameters.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="ServerInInterval.cs" />

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Abstracta.AccessLogAnalyzer.DataExtractors
@@ -8,6 +7,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
     {
         // http://httpd.apache.org/docs/2.2/logs.html
         // http://httpd.apache.org/docs/current/mod/mod_log_config.html
+
+        public new bool NeedParameters = true;
 
         public static string Parameters
         {
@@ -19,14 +20,18 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             LineFormat = format;
 
             // HOST TIME URL RCODE RTIME RSIZE
-            TemplateOrder = new[] { -1, -1, -1, -1, -1, -1 };
+            TemplateOrder = new[]
+                {
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue, 
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue
+                };
 
             var elements = ExtractElementsOfFormat(format);
 
             TemplateOrder[HOST] = FindIndexOf(elements, new[] { "%h", "%a" });
             TemplateOrder[TIME] = FindIndexOf(elements, new[] { "%t" });
             TemplateOrder[URL] = FindIndexOf(elements, new[] { "%r" });
-            TemplateOrder[RCODE] = FindIndexOf(elements, new[] { "%>s" });
+            TemplateOrder[RCODE] = FindIndexOf(elements, new[] { "%>s", "%s" });
             TemplateOrder[RSIZE] = FindIndexOf(elements, new[] { "%B", "%b" });
 
             TemplateOrder[RTIME] = FindIndexOf(elements, new[] { "%D" });
@@ -63,7 +68,9 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 }
                 else if (TemplateOrder[RCODE] == i)
                 {
-                    Pattern += elements[i].Replace("%>s", "(\\d+)");
+                    var tmp = elements[i].Replace("%>s", "(\\d+)");
+                    tmp = tmp.Replace("%s", "(\\d+)");
+                    Pattern += tmp;
                 }
                 else if (TemplateOrder[RSIZE] == i)
                 {
@@ -93,29 +100,16 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             // Increment all indexes because the groups start on '1' instead of in '0'
             for (var i = 0; i < TemplateOrder.Length; i++)
             {
-                TemplateOrder[i]++;
+                if (TemplateOrder[i] >= 0)
+                {
+                    TemplateOrder[i]++;
+                }
             }
         }
 
         protected override DateTime FormatDateTime(string value)
         {
             return ExtractDateHttpdTomcatJBoss(value);
-        }
-
-        private static int FindIndexOf(IList<string> elementList, IEnumerable<string> elementsToFind)
-        {
-            foreach (var t in elementsToFind)
-            {
-                for (var j = 0; j < elementList.Count; j++)
-                {
-                    if (elementList[j].StartsWith(t))
-                    {
-                        return j;
-                    }
-                }
-            }
-
-            return -1;
         }
     }
 }

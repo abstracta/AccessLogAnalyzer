@@ -7,6 +7,8 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 {
     public class AccessLogExtractor : DataExtractor
     {
+        public new bool NeedParameters = true;
+
         internal const string StrHost = "HOST";
         internal const string StrTime = "TIME";
         internal const string StrURL = "URL";
@@ -70,7 +72,11 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             // Format: HOST TIME URL RCODE RTIME|RENDTIME RSIZE (SECOND|MILLISECOND|MICROSECOND)
             var elements = format.Split(' ');
 
-            TemplateOrder = new[] { -1, -1, -1, -1, -1, -1 };
+            TemplateOrder = new[]
+                {
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue, 
+                    TemplateOrderInitValue, TemplateOrderInitValue, TemplateOrderInitValue
+                };
 
             for (var i = 0; i < elements.Length; i++)
             {
@@ -108,7 +114,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
             Pattern = "(.*)";
             for (var i = 1; i < TemplateOrder.Length; i++)
             {
-                if (TemplateOrder[i] != -1)
+                if (TemplateOrder[i] != TemplateOrderInitValue)
                 {
                     Pattern += "\t(.*)";
                 }
@@ -127,7 +133,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                     return;
                 }
 
-                if (TemplateOrder[HOST] != -1)
+                if (TemplateOrder[HOST] != TemplateOrderInitValue)
                 {
                     RemoteHost = groups[TemplateOrder[HOST]];
                 }
@@ -136,7 +142,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
                 Url = groups[TemplateOrder[URL]];
                 ResponseCode = int.Parse(groups[TemplateOrder[RCODE]]);
 
-                if (TemplateOrder[RSIZE] != -1)
+                if (TemplateOrder[RSIZE] != TemplateOrderInitValue)
                 {
                     ResponseSize = GetResponseSize(groups[TemplateOrder[RSIZE]]);
                 }
@@ -151,7 +157,7 @@ namespace Abstracta.AccessLogAnalyzer.DataExtractors
 
         private static int CountGroups(IEnumerable<int> templateOrder)
         {
-            return templateOrder.Count(t => t != -1);
+            return templateOrder.Count(t => t != TemplateOrderInitValue);
         }
 
         public override bool Contains(int parameter)

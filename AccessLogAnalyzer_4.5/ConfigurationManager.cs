@@ -349,22 +349,8 @@ namespace Abstracta.AccessLogAnalyzer
 
         public string GetLineFormat(string serverName)
         {
-            ServerType serverType = GetServerTypeOfServer(serverName);
-
-            switch (serverType)
-            {
-                case ServerType.Tomcat:
-                    return TomcatDataExtractor.Parameters;
-
-                case ServerType.Apache:
-                    return ApacheDataExtractor.Parameters;
-
-                case ServerType.IIS:
-                    return IISDataExtractor.Parameters;
-
-                default:
-                    return AccessLogExtractor.Parameters;
-            }
+            var serverType = GetServerTypeOfServer(serverName);
+            return DataExtractor.ParametersOfServerType(serverType);
         }
 
         private ServerType GetServerTypeOfServer(string serverName)
@@ -381,6 +367,11 @@ namespace Abstracta.AccessLogAnalyzer
         public List<ServerParameters> GetListOfServerDefinitions()
         {
             return (List<ServerParameters>) _parameters[Constants.Servers];
+        }
+
+        public bool ServerTypeNeedsParameters(ServerType serverType)
+        {
+            return DataExtractor.ServerTypeNeedsParameters(serverType);
         }
     }
 }
